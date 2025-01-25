@@ -1,0 +1,9 @@
+.searchbar {
+    border: 1px solid gray;
+    width: 90%;
+    height: 3em;
+    border-radius: 1em;
+    text-align: center;
+    font-weight: bold;
+    color: black;
+ }
