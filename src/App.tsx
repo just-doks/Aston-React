@@ -1,12 +1,11 @@
-import React from 'react';
+import { createBrowserRouter, RouterProvider } from 'react-router';
 import './App.css';
+import HomePage from './pages/HomePage';
 
+const router = createBrowserRouter([{path: '/', element: <HomePage />}])
 function App() {
   return (
-    <div>
-      <h1>Hello world</h1>
-      <p>{process.env.REACT_APP_API_URL}</p>
-    </div>
+    <RouterProvider router={router} />
   );
 }
 
