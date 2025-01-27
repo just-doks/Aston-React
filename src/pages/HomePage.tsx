@@ -2,7 +2,7 @@ import Searchbar from "../components/Searchbar";
 import './HomePage.css'
 import homeImg from '../assets/home.png'
 
-const HomePage = () =>
+export const HomePage = () =>
   (
       <div className="container homepage-wrapper">
         <h1 className="homepage-title">
@@ -17,4 +17,3 @@ const HomePage = () =>
         </div>
       </div>
   );
-export default HomePage;

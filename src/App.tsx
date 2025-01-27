@@ -1,6 +1,6 @@
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router";
 import "./App.css";
-import HomePage from "./pages/HomePage";
+import { HomePage } from "./pages/HomePage";
 import { Header } from "./components/Header";
 import { PATHS } from "./utils/constants";
 
