@@ -10,7 +10,7 @@ import type {
 /**
  * Функция возвращает первую страницу всех персонажей
  * со ссылкой на следующую страницу.
- * {@link fetchNextPage} - функция для получения страницы по ссылке.
+ * {@link fetchCharacterPage} - функция для получения страницы по ссылке.
  */
 export const fetchAllCharacters = 
 async (): Promise<CharacterResponse> => {
@@ -21,7 +21,7 @@ async (): Promise<CharacterResponse> => {
 /**
  * Функция возвращает первую страницу отфильтрованных 
  * персонажей со ссылкой на следующую страницу.
- * {@link fetchNextPage} - функция для получения страницы по ссылке.
+ * {@link fetchCharacterPage} - функция для получения страницы по ссылке.
  */
 export const fetchFilteredCharacters = 
 async (filters : TypeFilters): Promise<CharacterResponse> => {
