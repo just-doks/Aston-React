@@ -1,25 +1,26 @@
 import "./Header.css";
 import Logo from "../../assets/logo";
 import { NavLink } from "react-router";
+import { PATHS } from "../../utils/constants";
 
-type TProps = {
+type HeaderProps = {
   isAuth?: boolean;
   userName?: string;
 };
 
-const Header = ({ isAuth, userName }: TProps) => {
+const Header = ({ isAuth, userName }: HeaderProps) => {
   return (
-    <div className="header">
+    <header className="header">
       <div className="container header_wrapper">
-        <NavLink to="/">
+        <NavLink to={PATHS.HOME}>
           <Logo />
         </NavLink>
         {isAuth ? (
           <div className="header_buttons">
-            <NavLink className="header_button" to="/favorites">
+            <NavLink className="header_button" to={PATHS.FAVORITES}>
               Favorites
             </NavLink>
-            <NavLink className="header_button" to="/history">
+            <NavLink className="header_button" to={PATHS.HISTORY}>
               History
             </NavLink>
             <p className="header_username">Hi, {userName}</p>
@@ -27,17 +28,17 @@ const Header = ({ isAuth, userName }: TProps) => {
           </div>
         ) : (
           <div className="header_buttons">
-            <NavLink className="header_button" to="/login">
+            <NavLink className="header_button" to={PATHS.SIGNIN}>
               Sign in
             </NavLink>
-            <NavLink className="header_button" to="/singin">
+            <NavLink className="header_button" to={PATHS.SIGNUP}>
               Sing up
             </NavLink>
           </div>
         )}
       </div>
-    </div>
+    </header>
   );
 };
 
-export default Header;
+export default Header
