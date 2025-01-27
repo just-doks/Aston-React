@@ -1,7 +1,8 @@
-import { createBrowserRouter, RouterProvider, Outlet } from 'react-router';
-import './App.css';
-import HomePage from './pages/HomePage';
-import Header from './components/header';
+import { createBrowserRouter, RouterProvider, Outlet } from "react-router";
+import "./App.css";
+import HomePage from "./pages/HomePage";
+import { Header } from "./components/Header";
+import { PATHS } from "./utils/constants";
 
 const Layout = () => (
   <>
@@ -10,24 +11,18 @@ const Layout = () => (
       <Outlet />
     </main>
   </>
-)
-
-const HomePath = "/"
+);
 
 const router = createBrowserRouter([
   {
-    path: HomePath,
+    path: PATHS.HOME,
     element: <Layout />,
-    children: [
-      { path: HomePath, element: <HomePage /> },
-    ],
+    children: [{ path: PATHS.HOME, element: <HomePage /> }],
   },
 ]);
 
 function App() {
-  return (
-    <RouterProvider router={router}/>
-  );
+  return <RouterProvider router={router} />;
 }
 
 export default App;

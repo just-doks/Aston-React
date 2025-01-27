@@ -1,11 +1,11 @@
-import Header from './Header'
+import Header from "./Header"
 
-type TProps = {
+type HeaderContainerProps = {
     isAuth?: boolean,
     userName?: string
 }
 
-const HeaderContainer = ({isAuth, userName}: TProps) => {
+const HeaderContainer = ({isAuth, userName}: HeaderContainerProps) => {
     return <Header isAuth={true} userName='User' />
 }
 

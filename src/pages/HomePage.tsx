@@ -4,7 +4,7 @@ import homeImg from '../assets/home.png'
 
 const HomePage = () => {
   return (
-      <div className="homepage-wrapper container">
+      <div className="container homepage-wrapper">
         <h1 className="homepage-title">
           Welcome to the best Rick and Morty Website in all of the Multiverse
         </h1>
