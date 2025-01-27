@@ -5,8 +5,6 @@ type HeaderContainerProps = {
     userName?: string
 }
 
-const HeaderContainer = ({isAuth, userName}: HeaderContainerProps) => {
-    return <Header isAuth={true} userName='User' />
-}
+const HeaderContainer = ({isAuth, userName}: HeaderContainerProps) => <Header isAuth={true} userName='User' />
 
 export default HeaderContainer
