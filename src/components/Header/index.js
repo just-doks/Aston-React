@@ -1,1 +1,1 @@
-export {default as Header} from "./HeaderContainer"
+export {HeaderContainer} from "./HeaderContainer"

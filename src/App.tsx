@@ -1,12 +1,12 @@
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router";
 import "./App.css";
 import { HomePage } from "./pages/HomePage";
-import { Header } from "./components/Header";
+import { HeaderContainer } from "./components/Header";
 import { PATHS } from "./utils/constants";
 
 const Layout = () => (
   <>
-    <Header />
+    <HeaderContainer />
     <main>
       <Outlet />
     </main>

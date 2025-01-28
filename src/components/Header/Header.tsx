@@ -8,7 +8,7 @@ type HeaderProps = {
   userName?: string;
 };
 
-const Header = ({ isAuth, userName }: HeaderProps) => 
+export const Header = ({ isAuth, userName }: HeaderProps) => 
   (
     <header className="header">
       <div className="container header_wrapper">
@@ -39,5 +39,3 @@ const Header = ({ isAuth, userName }: HeaderProps) =>
       </div>
     </header>
   );
-
-export default Header
