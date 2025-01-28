@@ -1,0 +1,30 @@
+.homepage-wrapper{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 16px;
+}
+.homepage-logo{
+    width: 480px;
+    height: 480px;
+    object-fit: contain;
+}
+
+.homepage-title{
+    background-color: rgb(43, 74, 128);
+    padding: 16px;
+    border-radius: 30px;
+    color: #fff;
+    border: 1px solid black;
+}
+.homepage-search_wrapper{
+    color: #fff;
+    font-weight: 20px;
+    padding: 6px 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: rgb(43, 74, 128);
+    border-radius: 30px;
+    border: 1px solid black;
+}

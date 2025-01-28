@@ -1,0 +1,44 @@
+.header {
+    background: linear-gradient(to bottom, rgba(30, 87, 153, 1) -36%, rgba(125, 185, 232, 0) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#1e5799', endColorstr='#007db9e8', GradientType=0);
+    padding: 10px 0 10px 0;
+}
+
+.header_wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.header_logo {
+    width: 416px;
+    height: 128px;
+}
+
+.header_buttons {
+    display: flex;
+    gap: 25px
+}
+
+.header_button,
+.header_username {
+    background-color: rgb(43, 74, 128);
+    color: #fff;
+    text-decoration: none;
+    padding: 16px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    box-shadow: 0 0 10px 2px rgb(191, 222, 66);
+    border: none;
+    outline: none;
+    transition: transform .2s ease-in-out;
+}
+
+.header_button:hover {
+    transform: scale(1.05);
+    cursor: pointer;
+
+}
