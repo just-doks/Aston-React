@@ -4,6 +4,7 @@ export const PATHS: Record<string, string> = {
     FAVORITES: '/favorites',
     SIGNIN: '/signin',
     SIGNUP: '/signup',
-    HISTORY: '/history',
-    CHARACTER: '/character'
- }
+    HISTORY: '/history'
+}
+
+export const CHARACTER_ENDPOINT = '/character';
