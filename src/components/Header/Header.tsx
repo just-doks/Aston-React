@@ -8,8 +8,8 @@ type HeaderProps = {
   userName?: string;
 };
 
-const Header = ({ isAuth, userName }: HeaderProps) => {
-  return (
+export const Header = ({ isAuth, userName }: HeaderProps) => 
+  (
     <header className="header">
       <div className="container header_wrapper">
         <NavLink to={PATHS.HOME}>
@@ -39,6 +39,3 @@ const Header = ({ isAuth, userName }: HeaderProps) => {
       </div>
     </header>
   );
-};
-
-export default Header

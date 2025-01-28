@@ -1,9 +1,9 @@
-import Searchbar from "../components/Searchbar";
+import {Searchbar} from "../components/Searchbar";
 import './HomePage.css'
 import homeImg from '../assets/home.png'
 
-const HomePage = () => {
-  return (
+export const HomePage = () =>
+  (
       <div className="container homepage-wrapper">
         <h1 className="homepage-title">
           Welcome to the best Rick and Morty Website in all of the Multiverse
@@ -17,5 +17,3 @@ const HomePage = () => {
         </div>
       </div>
   );
-};
-export default HomePage;
