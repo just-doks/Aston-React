@@ -1,5 +1,3 @@
 import './Searchbar.css'
 
-const Searchbar = () => <input type="text" className="searchbar" placeholder="Search..."/>
-
-export default Searchbar
+export const Searchbar = () => <input type="text" className="searchbar" placeholder="Search..."/>

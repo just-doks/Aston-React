@@ -1,4 +1,4 @@
-import Searchbar from "../components/Searchbar";
+import {Searchbar} from "../components/Searchbar";
 import './HomePage.css'
 import homeImg from '../assets/home.png'
 
