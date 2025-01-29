@@ -1,6 +1,6 @@
-import {Searchbar} from "../components/Searchbar";
+import {Searchbar} from "../../components/Searchbar";
 import './HomePage.css'
-import homeImg from '../assets/home.png'
+import homeImg from '../../assets/home.png'
 
 export const HomePage = () =>
   (
