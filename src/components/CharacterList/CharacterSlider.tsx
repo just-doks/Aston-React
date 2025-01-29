@@ -35,20 +35,20 @@ export const CharacterSlider = (props) => {
         name: "Morty Smith",
         image: "https://rickandmortyapi.com/api/character/avatar/2.jpeg",
       },
-      {
-        id: 7,
-        name: "Morty Smith",
-        image: "https://rickandmortyapi.com/api/character/avatar/2.jpeg",
-      },
-      {
-        id: 8,
-        name: "Morty Smith",
-        image: "https://rickandmortyapi.com/api/character/avatar/2.jpeg",
-      },
     ],
     [
       {
-        id: 9,
+        id: 7,
+        name: "Rick Sanchez",
+        image: "https://rickandmortyapi.com/api/character/avatar/1.jpeg",
+      },
+      {
+        id: 8,
+        name: "Rick Sanchez",
+        image: "https://rickandmortyapi.com/api/character/avatar/1.jpeg",
+      },
+      {
+        id: 0,
         name: "Rick Sanchez",
         image: "https://rickandmortyapi.com/api/character/avatar/1.jpeg",
       },
@@ -64,26 +64,6 @@ export const CharacterSlider = (props) => {
       },
       {
         id: 12,
-        name: "Rick Sanchez",
-        image: "https://rickandmortyapi.com/api/character/avatar/1.jpeg",
-      },
-      {
-        id: 13,
-        name: "Rick Sanchez",
-        image: "https://rickandmortyapi.com/api/character/avatar/1.jpeg",
-      },
-      {
-        id: 14,
-        name: "Rick Sanchez",
-        image: "https://rickandmortyapi.com/api/character/avatar/1.jpeg",
-      },
-      {
-        id: 15,
-        name: "Rick Sanchez",
-        image: "https://rickandmortyapi.com/api/character/avatar/1.jpeg",
-      },
-      {
-        id: 16,
         name: "Rick Sanchez",
         image: "https://rickandmortyapi.com/api/character/avatar/1.jpeg",
       },
