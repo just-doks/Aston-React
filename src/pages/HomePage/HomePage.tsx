@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { SearchBar } from "src/components/SearchBar";
 import './HomePage.css'
-import homeImg from '../assets/home.png'
+import homeImg from '../../assets/home.png'
 
 export const HomePage: FC = () =>
   (

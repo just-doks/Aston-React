@@ -1,5 +1,5 @@
 import "./Header.css";
-import Logo from "../../assets/logo";
+import { SvgIcon } from "../../assets";
 import { NavLink } from "react-router";
 import { PATHS } from "../../utils/constants";
 
@@ -13,7 +13,7 @@ export const Header = ({ isAuth, userName }: HeaderProps) =>
     <header className="header">
       <div className="container header_wrapper">
         <NavLink to={PATHS.HOME}>
-          <Logo />
+          <SvgIcon />
         </NavLink>
         {isAuth ? (
           <div className="header_buttons">
