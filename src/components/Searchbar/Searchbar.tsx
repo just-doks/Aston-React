@@ -1,3 +1,3 @@
-import './Searchbar.css'
+import './SearchBar.css'
 
-export const Searchbar = () => <input type="text" className="searchbar" placeholder="Search..."/>
+export const SearchBar = () => <input type="text" className="searchbar" placeholder="Search..."/>
