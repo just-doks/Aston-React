@@ -2,14 +2,22 @@ import "./Header.css";
 import Logo from "../../assets/logo";
 import { NavLink } from "react-router";
 import { PATHS } from "../../utils/constants";
+import { RootState } from "../../store/store";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../../store/authSlice";
 
-type HeaderProps = {
-  isAuth?: boolean;
-  userName?: string;
-};
 
-export const Header = ({ isAuth, userName }: HeaderProps) => 
-  (
+export const Header = () => {
+
+  const user = useSelector((state: RootState) => state.auth.loginUser)
+  const isAuth = useSelector((state: RootState) => state.auth.isAuth)
+  const dispatch = useDispatch()
+
+  const handleLogout = () => {
+    dispatch(logout())
+  }
+
+  return (
     <header className="header">
       <div className="container header_wrapper">
         <NavLink to={PATHS.HOME}>
@@ -23,8 +31,8 @@ export const Header = ({ isAuth, userName }: HeaderProps) =>
             <NavLink className="header_button" to={PATHS.HISTORY}>
               History
             </NavLink>
-            <p className="header_username">Hi, {userName}</p>
-            <button className="header_button">Logout</button>
+            <p className="header_username">Hi, {user?.username}</p>
+            <button onClick={handleLogout} className="header_button">Logout</button>
           </div>
         ) : (
           <div className="header_buttons">
@@ -39,3 +47,4 @@ export const Header = ({ isAuth, userName }: HeaderProps) =>
       </div>
     </header>
   );
+};
