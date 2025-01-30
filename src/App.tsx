@@ -2,7 +2,7 @@ import { createBrowserRouter, RouterProvider, Outlet } from "react-router";
 import "./App.css";
 import { HomePage } from "./pages/HomePage/HomePage";
 import { SignInPage, SignUpPage } from "./pages/AuthPages/AuthPages";
-import { HeaderContainer } from "./components/Header";
+import { Header } from "./components/Header";
 import { PATHS } from "./utils/constants";
 import { useAuthWatcher } from "./hooks/useAuthWatcher";
 
@@ -10,7 +10,7 @@ const Layout = () => {
   useAuthWatcher();
   return (
     <>
-      <HeaderContainer />
+      <Header />
       <main>
         <Outlet />
       </main>
