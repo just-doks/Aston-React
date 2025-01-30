@@ -35,4 +35,8 @@ button {
   
     /* Remove platform-specific quirks */
     -webkit-tap-highlight-color: transparent; /* Mobile tap highlight */
-  }
+}
+
+ul {
+    list-style: none;
+}
