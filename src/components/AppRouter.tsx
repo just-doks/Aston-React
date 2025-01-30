@@ -8,7 +8,6 @@ import { PATHS } from "src/utils/constants";
 import { publicRoutes } from "src/routes";
 
 export const AppRouter = () => {
-
     return (
         <BrowserRouter>
             <Routes>
