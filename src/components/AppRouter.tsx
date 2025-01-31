@@ -7,8 +7,8 @@ import { Layout } from "./Layout";
 import { PATHS } from "src/utils/constants";
 import { publicRoutes } from "src/routes";
 
-export const AppRouter = () => {
-    return (
+export const AppRouter = () =>
+    (
         <BrowserRouter>
             <Routes>
                 <Route element={<Layout/>}>
@@ -22,4 +22,3 @@ export const AppRouter = () => {
             </Routes>
         </BrowserRouter>
     )
-}

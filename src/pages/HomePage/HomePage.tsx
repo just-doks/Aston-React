@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { SearchBar } from "../../components/SearchBar";
+import { SearchBar } from "../../components/Searchbar";
 import "./HomePage.css";
 import homeImg from "../../assets/home.png";
 
