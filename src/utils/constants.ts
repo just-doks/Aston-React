@@ -4,7 +4,8 @@ export const PATHS: Record<string, string> = {
     FAVORITES: '/favorites',
     SIGNIN: '/signin',
     SIGNUP: '/signup',
-    HISTORY: '/history'
+    HISTORY: '/history',
+    CHARACTER: '/character'
 }
 
 export const CHARACTER_ENDPOINT = '/character';
