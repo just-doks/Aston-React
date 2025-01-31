@@ -2,16 +2,18 @@ import "./Header.css";
 import Logo from "../../assets/logo";
 import { NavLink } from "react-router";
 import { PATHS } from "../../utils/constants";
-import { RootState } from "../../store/store";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../store/authSlice";
+import { authSelectors } from "../../utils/selectors";
 
 
 export const Header = () => {
 
-  const user = useSelector((state: RootState) => state.auth.loginUser)
-  const isAuth = useSelector((state: RootState) => state.auth.isAuth)
+  const user = useSelector(authSelectors.loginUser)
+  const isAuth = useSelector(authSelectors.isAuth)
   const dispatch = useDispatch()
+
+  const username = user?.username ?? "Guest"
 
   const handleLogout = () => {
     dispatch(logout())
@@ -31,7 +33,7 @@ export const Header = () => {
             <NavLink className="header_button" to={PATHS.HISTORY}>
               History
             </NavLink>
-            <p className="header_username">Hi, {user?.username}</p>
+            <p className="header_username">Hi, {username}</p>
             <button onClick={handleLogout} className="header_button">Logout</button>
           </div>
         ) : (

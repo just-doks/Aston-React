@@ -4,8 +4,8 @@ import { NavLink } from "react-router";
 import { PATHS } from "../../utils/constants";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser, registerUser } from "../../store/authSlice";
-import { RootState } from "../../store/store";
-import * as Yup from "yup";
+import { authValidationSchema, signInValidationSchema } from "../../utils/validationSchemes";
+import { authSelectors } from "../../utils/selectors";
 
 type AuthFormType = {
   type: "signin" | "signup";
@@ -14,31 +14,20 @@ type AuthFormType = {
 export const AuthForm = ({ type }: AuthFormType) => {
   const isSignup = type === "signup";
 
-  const auth = useSelector((state: RootState) => state.auth);
+  const error = useSelector(authSelectors.error);
   const dispatch = useDispatch();
 
   type FormValues = {
     username: string;
     password: string;
   };
-
   const formik = useFormik<FormValues>({
     initialValues: {
       username: "",
       password: "",
     },
-    validationSchema: Yup.object({
-      username: isSignup
-        ? Yup.string()
-            .min(3, "Must be at least 3 characters")
-            .max(15, "Maximum 15 characters")
-            .required("Username requred")
-        : Yup.string(),
-      password: Yup.string()
-        .min(6, "Must be at least 6 characters")
-        .max(15, "Maximum 15 characters")
-        .required("Password requred"),
-    }),
+    validationSchema: isSignup ? authValidationSchema : signInValidationSchema,
+    enableReinitialize: true,
     onSubmit: (values) => {
       if (isSignup) {
         dispatch(registerUser(values));
@@ -78,7 +67,7 @@ export const AuthForm = ({ type }: AuthFormType) => {
             onChange={formik.handleChange}
             value={formik.values.password}
             className="sign_input"
-            type="text"
+            type="password"
             name="password"
           />
           {formik.touched.password && formik.errors.password && (
@@ -90,14 +79,14 @@ export const AuthForm = ({ type }: AuthFormType) => {
         </form>
         {isSignup ? (
           <p className="link">
-            Already registered? <NavLink to={PATHS.SIGNIN}>Sing In</NavLink>
+            Already registered? <NavLink to={PATHS.SIGNIN}>Sign In</NavLink>
           </p>
         ) : (
           <p className="link">
-            New here? <NavLink to={PATHS.SIGNUP}>Sing Up</NavLink>
+            New here? <NavLink to={PATHS.SIGNUP}>Sign Up</NavLink>
           </p>
         )}
-        <span className="error">{auth.error}</span>
+        <span className="error">{error}</span>
       </div>
     </div>
   );
