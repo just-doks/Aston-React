@@ -13,10 +13,10 @@ export function CharacterCard({character = undefined}: { character: CharacterSch
     return(
         <div className="c-card-container">
         { character === undefined 
-            ? <PlanetSpinner className="c-card-spinner"/>
+            ? <PlanetSpinner className=" c-card-spinner"/>
             : <>
                 <img className="c-card-image" src={character.image} alt="image"/>
-                <NavLink className="c-card-navlink" to={PATHS.HOME}>
+                <NavLink className="c-card-navlink" to={PATHS.CHARACTER}>
                     <span>{character.name}</span>
                  </NavLink>
                 <StarButton 
