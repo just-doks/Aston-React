@@ -4,13 +4,13 @@ import { NavLink } from "react-router";
 import { PATHS } from "../../utils/constants";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../store/authSlice";
-import { authSelectors } from "../../utils/selectors";
+import { loginUser, isAuth } from "../../utils/selectors";
 
 
 export const Header = () => {
 
-  const user = useSelector(authSelectors.loginUser)
-  const isAuth = useSelector(authSelectors.isAuth)
+  const user = useSelector(loginUser)
+  const isAuthenticated = useSelector(isAuth)
   const dispatch = useDispatch()
 
   const username = user?.username ?? "Guest"
@@ -25,7 +25,7 @@ export const Header = () => {
         <NavLink to={PATHS.HOME}>
           <Logo />
         </NavLink>
-        {isAuth ? (
+        {isAuthenticated ? (
           <div className="header_buttons">
             <NavLink className="header_button" to={PATHS.FAVORITES}>
               Favorites

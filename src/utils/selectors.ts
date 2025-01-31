@@ -1,7 +1,7 @@
 import { RootState } from "../store/store";
 
-export const authSelectors = {
-    loginUser: (state: RootState) => state.auth.loginUser,
-    isAuth: (state: RootState) => state.auth.isAuth,
-    error: (state: RootState) => state.auth.error
-}
+export const loginUser = (state: RootState) => state.auth.loginUser
+
+export const isAuth = (state: RootState) => state.auth.isAuth
+
+export const error = (state: RootState) => state.auth.error

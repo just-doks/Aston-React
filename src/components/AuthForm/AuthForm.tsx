@@ -5,7 +5,7 @@ import { PATHS } from "../../utils/constants";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser, registerUser } from "../../store/authSlice";
 import { authValidationSchema, signInValidationSchema } from "../../utils/validationSchemes";
-import { authSelectors } from "../../utils/selectors";
+import { error } from "../../utils/selectors";
 
 type AuthFormType = {
   type: "signin" | "signup";
@@ -14,7 +14,7 @@ type AuthFormType = {
 export const AuthForm = ({ type }: AuthFormType) => {
   const isSignup = type === "signup";
 
-  const error = useSelector(authSelectors.error);
+  const errorMessage = useSelector(error);
   const dispatch = useDispatch();
 
   type FormValues = {
@@ -86,7 +86,7 @@ export const AuthForm = ({ type }: AuthFormType) => {
             New here? <NavLink to={PATHS.SIGNUP}>Sign Up</NavLink>
           </p>
         )}
-        <span className="error">{error}</span>
+        <span className="error">{errorMessage}</span>
       </div>
     </div>
   );
