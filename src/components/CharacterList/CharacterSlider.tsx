@@ -1,8 +1,20 @@
 import "./CharacterSlider.css";
 import { CharacterCard } from "./CharacterCard";
 import { SvgButton } from "../../assets";
-import { useState } from "react";
-export const CharacterSlider = (props) => {
+import { useEffect, useState} from "react";
+import { useSelector } from "react-redux";
+import { searchError } from "../../utils/selectors";
+
+export const CharacterSlider = () => {
+  const error = useSelector(searchError);
+  const [isMounted, setIsMounted] = useState(false);
+  useEffect(() => {
+    if (isMounted) {
+      throw new Error(error)
+    } else {
+       setIsMounted(!isMounted)
+    }
+  },[error])
   const TEST = [
     [
       {
@@ -70,6 +82,7 @@ export const CharacterSlider = (props) => {
     ],
   ];
   const [pageNumber, setPageNumber] = useState(0)
+
   
   const handlePreviousPage = () => {
       setPageNumber(pageNumber - 1)

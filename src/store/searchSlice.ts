@@ -34,10 +34,10 @@ export const { reducer: searchReducer, actions: searchActions } = createSlice({
     setSearchResults(state, action: PayloadAction<CharacterResponse>) {
       state.searchResults = action.payload;
     },
-    setError(state, action: PayloadAction<string>) {
+    setSearchError(state, action: PayloadAction<string>) {
         state.searchError = action.payload;
     },
   },
 });
 
-export const { configureSearch, setSearchResults } = searchActions;
+export const { configureSearch, setSearchResults, setSearchError } = searchActions;
