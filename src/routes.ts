@@ -3,6 +3,7 @@ import { HomePage } from "./pages/HomePage";
 import { PATHS } from "./utils/constants";
 import { SearchPage } from "./pages/SearchPage/SearchPage";
 import { CharacterPage } from "./pages/CharacterPage";
+import { SignInPage, SignUpPage } from "./pages/AuthPages/AuthPages";
 
 export const publicRoutes: {path: string, Component: (props: any) => JSX.Element}[] = [
     {
@@ -16,5 +17,13 @@ export const publicRoutes: {path: string, Component: (props: any) => JSX.Element
     {
         path: PATHS.CHARACTER,
         Component: CharacterPage
+    },
+    { 
+        path: PATHS.SIGNUP, 
+        Component: SignUpPage 
+    },
+    { 
+        path: PATHS.SIGNIN, 
+        Component: SignInPage 
     }
 ]
