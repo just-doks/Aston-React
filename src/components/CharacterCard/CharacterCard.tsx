@@ -1,5 +1,5 @@
 import { useState, JSX } from "react";
-import { NavLink } from "react-router";
+import { useNavigate } from "react-router";
 import './CharacterCard.css';
 import type { CharacterSchema } from "src/http/characterTypes";
 import { PATHS } from "src/utils/constants";
@@ -8,7 +8,11 @@ import { PlanetSpinner } from "./PlanetSpinner";
 
 export function CharacterCard({character = undefined}: { character: CharacterSchema }
 ): JSX.Element {
-    const [checked, setChecked] = useState<boolean>(false)
+    const [checked, setChecked] = useState<boolean>(false);
+    const navigate = useNavigate();
+    function handleLabelClick() {
+        navigate(PATHS.CHARACTER, { state: {character: character}})
+    }
 
     return(
         <div className="c-card-container">
@@ -16,9 +20,9 @@ export function CharacterCard({character = undefined}: { character: CharacterSch
             ? <PlanetSpinner className=" c-card-spinner"/>
             : <>
                 <img className="c-card-image" src={character.image} alt="image"/>
-                <NavLink className="c-card-navlink" to={PATHS.CHARACTER}>
+                 <label className="c-card-label" onClick={handleLabelClick}>
                     <span>{character.name}</span>
-                 </NavLink>
+                 </label>
                 <StarButton 
                     className="c-card-fav" 
                     checked={checked} 
