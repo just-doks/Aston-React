@@ -5,3 +5,4 @@ export const authSelectors = {
     isAuth: (state: RootState) => state.auth.isAuth,
     error: (state: RootState) => state.auth.error
 }
+
