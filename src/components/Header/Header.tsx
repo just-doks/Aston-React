@@ -1,16 +1,16 @@
 import "./Header.css";
-import Logo from "../../assets/logo";
+import { SvgIcon } from "../../assets/logo";
 import { NavLink } from "react-router";
 import { PATHS } from "../../utils/constants";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../store/authSlice";
-import { authSelectors } from "../../utils/selectors";
+import { loginUser, isAuth as auth } from "../../utils/selectors";
 
 
 export const Header = () => {
 
-  const user = useSelector(authSelectors.loginUser)
-  const isAuth = useSelector(authSelectors.isAuth)
+  const user = useSelector(loginUser)
+  const isAuth = useSelector(auth)
   const dispatch = useDispatch()
 
   const username = user?.username ?? "Guest"
@@ -23,7 +23,7 @@ export const Header = () => {
     <header className="header">
       <div className="container header_wrapper">
         <NavLink to={PATHS.HOME}>
-          <Logo />
+          <SvgIcon />
         </NavLink>
         {isAuth ? (
           <div className="header_buttons">

@@ -5,7 +5,7 @@ import { PATHS } from "../../utils/constants";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser, registerUser } from "../../store/authSlice";
 import { authValidationSchema, signInValidationSchema } from "../../utils/validationSchemes";
-import { authSelectors } from "../../utils/selectors";
+import { error as authError } from "../../utils/selectors";
 
 type AuthFormType = {
   type: "signin" | "signup";
@@ -14,7 +14,7 @@ type AuthFormType = {
 export const AuthForm = ({ type }: AuthFormType) => {
   const isSignup = type === "signup";
 
-  const error = useSelector(authSelectors.error);
+  const error = useSelector(authError);
   const dispatch = useDispatch();
 
   type FormValues = {
