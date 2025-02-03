@@ -6,9 +6,11 @@ import { PATHS } from "src/utils/constants";
 import { StarButton } from "./StarButton";
 import { PlanetSpinner } from "./PlanetSpinner";
 
-export function CharacterCard({character}: 
-    { character: CharacterSchema }
-) {
+type CharacterCardProps = {
+    character: CharacterSchema
+};
+
+export function CharacterCard({character}: CharacterCardProps) {
     const [checked, setChecked] = useState<boolean>(false);
     function handleStarChange() {
         setChecked(!checked)
