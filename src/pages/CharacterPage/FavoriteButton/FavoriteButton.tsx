@@ -1,8 +1,7 @@
 import './FavoriteButton.css';
 
-export function FavoriteButton({className, checked, onChange}: {
-    className?: string
-    checked: boolean, onChange: () => void
+export function FavoriteButton({checked, onChange, className}: {
+    checked: boolean, onChange: () => void, className?: string
 }) {
     return (
         <label className={'favorite-btn-label' + (className ? ` ${className}` : '')}>
