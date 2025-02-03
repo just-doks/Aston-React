@@ -56,7 +56,7 @@
 }
 
 
-.c-card-label {
+.c-card-link {
     z-index: 1;
     grid-column: 1 / 5;
     grid-row: 4 / 5;
@@ -65,7 +65,7 @@
     height: 100%;
     width: 100%;
     color: #fff;
-    --c1: rgb(43, 74, 128, 0.9);
+    --c1: rgba(43, 74, 128, 0.9);
     --c2: rgba(43, 74, 128, 0.45);
     --c3: rgba(43, 74, 128, 0);
     background: linear-gradient(to top, var(--c1) 0%, var(--c2) 80%, var(--c3) 95%);
@@ -74,7 +74,7 @@
     padding-top: 5%;
     cursor: pointer;
 }
-.c-card-label > span {
+.c-card-link > span {
     margin-top: auto;
     margin-bottom: auto;
     font-weight: 500;

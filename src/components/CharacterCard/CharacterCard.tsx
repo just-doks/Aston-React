@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router";
+import { Link } from "react-router";
 import './CharacterCard.css';
 import type { CharacterSchema } from "src/http/characterTypes";
 import { PATHS } from "src/utils/constants";
@@ -10,10 +10,6 @@ export function CharacterCard({character}:
     { character: CharacterSchema }
 ) {
     const [checked, setChecked] = useState<boolean>(false);
-    const navigate = useNavigate();
-    function handleLabelClick() {
-        navigate(PATHS.CHARACTER, { state: {character: character}})
-    }
     function handleStarChange() {
         setChecked(!checked)
     }
@@ -24,9 +20,13 @@ export function CharacterCard({character}:
             ? <PlanetSpinner className="c-card-spinner"/>
             : <>
                 <img className="c-card-image" src={character.image} alt="image"/>
-                 <label className="c-card-label" onClick={handleLabelClick}>
+                <Link 
+                    className="c-card-link"
+                    to={PATHS.CHARACTER} 
+                    state={character}
+                >
                     <span>{character.name}</span>
-                 </label>
+                 </Link>
                 <StarButton 
                     className="c-card-fav" 
                     checked={checked} 
