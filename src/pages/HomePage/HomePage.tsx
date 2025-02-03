@@ -1,9 +1,8 @@
-import { FC } from "react";
 import { SearchBar } from "../../components/SearchBar";
 import "./HomePage.css";
 import homeImg from "../../assets/home.png";
 
-export const HomePage: FC = () => (
+export const HomePage = () => (
   <div className="container homepage-wrapper">
     <h1 className="homepage-title">
       Welcome to the best Rick and Morty Website in all of the Multiverse
