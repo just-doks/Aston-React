@@ -44,7 +44,7 @@ export const fetchCharacterPage = async (page: string) => {
  * идентификатору.
  */
 export const fetchCharacter = async (id: number): Promise<CharacterSchema> => {
-    const {data} = await $host.get(`${CHARACTER_ENDPOINT}${id}`);
+    const {data} = await $host.get(`${CHARACTER_ENDPOINT}/${id}`);
     return data;
 }
 
