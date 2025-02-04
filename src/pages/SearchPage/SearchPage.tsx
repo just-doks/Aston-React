@@ -69,12 +69,13 @@ const TEST = [
       },
     ],
   ];
-export const SearchPage: React.FC = () => (
-  <div className="container searchpage-wrapper">
-    <h1 className="searchpage-title">
-      Search for your favorite characters right here!
-    </h1>
-    <SearchBar />
-    <CharacterSlider TEST={TEST} />
-  </div>
-);
+
+export const SearchPage: FC = () => {
+    return (
+    <div className='container searchpage-wrapper'>
+        <h1 className='searchpage-title'>Search for your favorite characters right here!</h1>
+        <SearchBar filterPosition="bottom"/>
+        <CharacterSlider TEST={TEST} />
+    </div>
+    )
+}

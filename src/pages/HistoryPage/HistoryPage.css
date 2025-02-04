@@ -63,3 +63,7 @@
     cursor: pointer;
     transform: scale(1.05);
 }
+
+.history_message {
+    color: #fff;
+}

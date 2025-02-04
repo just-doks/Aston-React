@@ -3,7 +3,15 @@ import { CharacterCard } from "./CharacterCard";
 import { SvgButton } from "../../assets";
 import { useState } from "react";
 
-export const CharacterSlider: React.FC<{TEST:{ id: number; name: string; image: string; }[][]}> = (props) => {
+type CharacterSliderProps = {
+  TEST: {
+    id: number;
+    name: string;
+    image: string;
+  }[][];
+};
+
+export const CharacterSlider = ({TEST}: CharacterSliderProps) => {
   const [pageNumber, setPageNumber] = useState(0);
 
   const handlePreviousPage = () => {
@@ -20,7 +28,7 @@ export const CharacterSlider: React.FC<{TEST:{ id: number; name: string; image: 
       <SvgButton />
     </button>
     <ul className="character-slider_items">
-      {props.TEST[pageNumber].map((character) => (
+      {TEST[pageNumber].map((character) => (
         <CharacterCard
           id={character.id}
           name={character.name}

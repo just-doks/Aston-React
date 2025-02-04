@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { SearchBar } from "src/components/SearchBar";
+import { SearchBar } from "../../components/SearchBar";
 import "./HomePage.css";
 import homeImg from "../../assets/home.png";
 
@@ -14,7 +14,7 @@ export const HomePage: FC = () => (
         Start exploring all of the sentient (at least we consider them to be
         such) beings who showed up in the series
       </p>
-      <SearchBar />
+      <SearchBar filterPosition="top"/>
     </div>
   </div>
 );
