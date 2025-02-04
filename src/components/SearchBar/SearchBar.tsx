@@ -32,6 +32,7 @@ export const SearchBar: React.FC<{ filterPosition: string }> = (props) => {
   const dropdownToggle = () => {
     setDropdownVisible(!dropdownVisible);
   };
+  
   return (
     <Formik initialValues={initialConfig} onSubmit={handleSubmit}>
       <Form className="searchbar">
