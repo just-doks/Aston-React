@@ -1,8 +1,6 @@
-import { FC } from "react";
 import { SearchBar } from "../../components/SearchBar";
 import "./HomePage.css";
 import homeImg from "../../assets/home.png";
-
 
 export const HomePage: FC = () => (
   <div className="homepage-wrapper container">
