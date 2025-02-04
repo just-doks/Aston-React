@@ -1,110 +1,60 @@
 import "./CharacterSlider.css";
-import { CharacterCard } from "./CharacterCard";
+import { CharacterCard } from "../CharacterCard";
 import { SvgButton } from "../../assets";
-import { useEffect, useState} from "react";
-import { useSelector } from "react-redux";
-import { searchError } from "../../utils/selectors";
+import { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { searchError, searchResults } from "../../utils/selectors";
+import { setSearchResults, setSearchError } from "../../store/searchSlice";
+import { fetchCharacterPage } from "../../http/characterAPI";
 
 export const CharacterSlider = () => {
+  const dispatch = useDispatch();
   const error = useSelector(searchError);
+  const response = useSelector(searchResults);
+  const characters = response?.results || [];
+  const nextPage = response?.info.next;
+  const prevPage = response?.info.prev;
   const [isMounted, setIsMounted] = useState(false);
   useEffect(() => {
     if (isMounted) {
-      throw new Error(error)
+      throw new Error(error);
     } else {
-       setIsMounted(!isMounted)
+      setIsMounted(!isMounted);
     }
-  },[error])
-  const TEST = [
-    [
-      {
-        id: 1,
-        name: "Morty Smith",
-        image: "https://rickandmortyapi.com/api/character/avatar/2.jpeg",
-      },
-      {
-        id: 2,
-        name: "Morty Smith",
-        image: "https://rickandmortyapi.com/api/character/avatar/2.jpeg",
-      },
-      {
-        id: 3,
-        name: "Morty Smith",
-        image: "https://rickandmortyapi.com/api/character/avatar/2.jpeg",
-      },
-      {
-        id: 4,
-        name: "Morty Smith",
-        image: "https://rickandmortyapi.com/api/character/avatar/2.jpeg",
-      },
-      {
-        id: 5,
-        name: "Morty Smith",
-        image: "https://rickandmortyapi.com/api/character/avatar/2.jpeg",
-      },
-      {
-        id: 6,
-        name: "Morty Smith",
-        image: "https://rickandmortyapi.com/api/character/avatar/2.jpeg",
-      },
-    ],
-    [
-      {
-        id: 7,
-        name: "Rick Sanchez",
-        image: "https://rickandmortyapi.com/api/character/avatar/1.jpeg",
-      },
-      {
-        id: 8,
-        name: "Rick Sanchez",
-        image: "https://rickandmortyapi.com/api/character/avatar/1.jpeg",
-      },
-      {
-        id: 0,
-        name: "Rick Sanchez",
-        image: "https://rickandmortyapi.com/api/character/avatar/1.jpeg",
-      },
-      {
-        id: 10,
-        name: "Rick Sanchez",
-        image: "https://rickandmortyapi.com/api/character/avatar/1.jpeg",
-      },
-      {
-        id: 11,
-        name: "Rick Sanchez",
-        image: "https://rickandmortyapi.com/api/character/avatar/1.jpeg",
-      },
-      {
-        id: 12,
-        name: "Rick Sanchez",
-        image: "https://rickandmortyapi.com/api/character/avatar/1.jpeg",
-      },
-    ],
-  ];
-  const [pageNumber, setPageNumber] = useState(0)
+  }, [error]);
 
-  
   const handlePreviousPage = () => {
-      setPageNumber(pageNumber - 1)
-  }
+    fetchCharacterPage(prevPage)
+      .then((data) => dispatch(setSearchResults(data)))
+      .catch((error) => {
+        dispatch(setSearchError(error));
+      });
+  };
   const handleNextPage = () => {
-    setPageNumber(pageNumber + 1)
-}
+    fetchCharacterPage(nextPage)
+      .then((data) => dispatch(setSearchResults(data)))
+      .catch((error) => {
+        dispatch(setSearchError(error));
+      });
+  };
+
   return (
     <div className="character-slider">
-      <button className="character-slider_button-back" onClick={handlePreviousPage}>
+      <button
+        className="character-slider_button-back"
+        onClick={handlePreviousPage}
+      >
         <SvgButton />
       </button>
       <ul className="character-slider_items">
-        {TEST[pageNumber].map((character) => (
-          <CharacterCard
-            id={character.id}
-            name={character.name}
-            image={character.image}
-          />
+        {characters.map((character) => (
+          <CharacterCard character={character} />
         ))}
       </ul>
-      <button className="character-slider_button-forward" onClick={handleNextPage}>
+      <button
+        className="character-slider_button-forward"
+        onClick={handleNextPage}
+      >
         <SvgButton />
       </button>
     </div>

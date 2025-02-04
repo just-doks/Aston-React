@@ -28,6 +28,8 @@ export const AuthForm = ({ type }: AuthFormType) => {
     },
     validationSchema: isSignup ? authValidationSchema : signInValidationSchema,
     enableReinitialize: true,
+    validationSchema: isSignup ? authValidationSchema : signInValidationSchema,
+    enableReinitialize: true,
     onSubmit: (values) => {
       if (isSignup) {
         dispatch(registerUser(values));
@@ -68,6 +70,7 @@ export const AuthForm = ({ type }: AuthFormType) => {
             value={formik.values.password}
             className="sign_input"
             type="password"
+            type="password"
             name="password"
           />
           {formik.touched.password && formik.errors.password && (
@@ -80,9 +83,11 @@ export const AuthForm = ({ type }: AuthFormType) => {
         {isSignup ? (
           <p className="link">
             Already registered? <NavLink to={PATHS.SIGNIN}>Sign In</NavLink>
+            Already registered? <NavLink to={PATHS.SIGNIN}>Sign In</NavLink>
           </p>
         ) : (
           <p className="link">
+            New here? <NavLink to={PATHS.SIGNUP}>Sign Up</NavLink>
             New here? <NavLink to={PATHS.SIGNUP}>Sign Up</NavLink>
           </p>
         )}
