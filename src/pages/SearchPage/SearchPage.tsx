@@ -1,7 +1,9 @@
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import "./SearchPage.css";
 import { SearchBar } from "src/components/SearchBar";
 import { CharacterSlider } from "../../components/CharacterList";
+import { useDispatch } from "react-redux";
+import { clearSearchConfig } from "../../store/searchSlice";
 
 const TEST = [
     [
@@ -71,6 +73,15 @@ const TEST = [
   ];
 
 export const SearchPage: FC = () => {
+
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+      return () => {
+        dispatch(clearSearchConfig())
+      }
+    }, [dispatch])
+
     return (
     <div className='container searchpage-wrapper'>
         <h1 className='searchpage-title'>Search for your favorite characters right here!</h1>

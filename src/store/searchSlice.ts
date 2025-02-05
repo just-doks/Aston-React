@@ -45,6 +45,9 @@ export const { reducer: searchReducer, actions: searchActions } = createSlice({
       state.history.length = 0
       removeItemFromLocalStorage("searchHistory")
     },
+    clearSearchConfig(state) {
+      state.searchConfig = { name: "" }
+    },
     setSearchResults(state, action: PayloadAction<CharacterResponse>) {
       state.searchResults = action.payload;
     },
@@ -54,4 +57,4 @@ export const { reducer: searchReducer, actions: searchActions } = createSlice({
   },
 });
 
-export const { configureSearch, configureHistory, setSearchResults, clearHistory } = searchActions;
+export const { configureSearch, configureHistory, setSearchResults, clearHistory, clearSearchConfig } = searchActions;
