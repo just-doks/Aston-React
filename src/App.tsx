@@ -8,6 +8,7 @@ export function App() {
     const { data } = await $host.get(
       "https://react-http-2e5c1-default-rtdb.europe-west1.firebasedatabase.app/isTelegramShareEnabled.json"
     );
+    return data
   };
   useEffect(() => {
     fetchTelegram();

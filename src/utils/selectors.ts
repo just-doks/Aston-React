@@ -13,3 +13,7 @@ export const searchConfig = (state: RootState) => state.search.searchConfig
 export const searchError = (state: RootState) => state.search.searchError
 
 export const searchResults = (state: RootState) => state.search.searchResults
+
+export const history = (state: RootState) => state.search.history
+
+export const telegramFlag = (state: RootState) => state.search.isTelegramShareEnabled

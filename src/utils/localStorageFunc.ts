@@ -1,29 +1,45 @@
+import { TypeFilters } from "../http/characterTypes";
+
 export type User = {
     username: string;
     password: string;
 };
 
+const LOCAL_STORAGE_KEYS = {
+    USERS: "users",
+    LOGIN_USER: "loginUser",
+    SEARCH_HISTORY: "searchHistory"
+}
+
 export const loadUsersFromLocalStorage = (): User[] => {
-    return JSON.parse(localStorage.getItem("users") || "[]");
+    return JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEYS.USERS) || "[]");
 };
 
 
 export const loadLoginUser = (): User | null => {
-    return JSON.parse(localStorage.getItem("loginUser") || "null");
+    return JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEYS.LOGIN_USER) || "null");
 };
 
 
 export const saveLoginUserToLocalStorage = (user: User) => {
-    const existingUser = localStorage.getItem("loginUser")
+    const existingUser = localStorage.getItem(LOCAL_STORAGE_KEYS.LOGIN_USER)
     if(!existingUser) {
-        localStorage.setItem("loginUser", JSON.stringify(user));
+        localStorage.setItem(LOCAL_STORAGE_KEYS.LOGIN_USER, JSON.stringify(user));
     }
 };
 
 export const saveUsersToLocalStorage = (users: User[]) => {
-    localStorage.setItem("users", JSON.stringify(users));
+    localStorage.setItem(LOCAL_STORAGE_KEYS.USERS, JSON.stringify(users));
 };
 
-export const removeItemFromLocalStorage = (user: string) => {
-    localStorage.removeItem(user);
+export const removeItemFromLocalStorage = (item: string) => {
+    localStorage.removeItem(item);
 };
+
+export const saveSearchConfigToLocalStorage = (searchConfig: TypeFilters[]) => {
+    localStorage.setItem(LOCAL_STORAGE_KEYS.SEARCH_HISTORY, JSON.stringify(searchConfig))
+}
+
+export const loadSearchConfigFromLocalStorage = (): TypeFilters[] => {
+    return JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEYS.SEARCH_HISTORY) || "[]");
+}

@@ -1,11 +1,13 @@
 import "./AuthForm.css";
 import { useFormik } from "formik";
-import { NavLink } from "react-router";
+import { NavLink} from "react-router";
 import { PATHS } from "../../utils/constants";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser, registerUser } from "../../store/authSlice";
 import { authValidationSchema, signInValidationSchema } from "../../utils/validationSchemes";
 import { error as authError } from "../../utils/selectors";
+import { useAuthRedirect } from "../../hooks/useAuthRedirect";
+import { useErrorClearOnRouteChange } from "../../hooks/useClearErrorOnRouteChange";
 
 type AuthFormType = {
   type: "signin" | "signup";
@@ -16,6 +18,8 @@ export const AuthForm = ({ type }: AuthFormType) => {
 
   const error = useSelector(authError);
   const dispatch = useDispatch();
+  useAuthRedirect()
+  useErrorClearOnRouteChange()
 
   type FormValues = {
     username: string;
@@ -38,6 +42,7 @@ export const AuthForm = ({ type }: AuthFormType) => {
         dispatch(loginUser(values))
       }
     },
+    
   });
 
   return (

@@ -4,13 +4,13 @@ import { NavLink } from "react-router";
 import { PATHS } from "../../utils/constants";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../store/authSlice";
-import { loginUser, isAuth } from "../../utils/selectors";
-
+import { loginUser, isAuth as auth } from "../../utils/selectors";
+import { getNavLinkClass } from "../../utils/getNavLinkClass";
 
 export const Header = () => {
 
   const user = useSelector(loginUser)
-  const isAuthenticated = useSelector(isAuth)
+  const isAuth = useSelector(auth)
   const dispatch = useDispatch()
 
   const username = user?.username ?? "Guest"
@@ -25,12 +25,12 @@ export const Header = () => {
         <NavLink to={PATHS.HOME}>
           <SvgIcon />
         </NavLink>
-        {isAuthenticated ? (
+        {isAuth ? (
           <div className="header_buttons">
-            <NavLink className="header_button" to={PATHS.FAVORITES}>
+            <NavLink className={getNavLinkClass} to={PATHS.FAVORITES}>
               Favorites
             </NavLink>
-            <NavLink className="header_button" to={PATHS.HISTORY}>
+            <NavLink className={getNavLinkClass} to={PATHS.HISTORY}>
               History
             </NavLink>
             <p className="header_username">Hi, {username}</p>
@@ -38,10 +38,10 @@ export const Header = () => {
           </div>
         ) : (
           <div className="header_buttons">
-            <NavLink className="header_button" to={PATHS.SIGNIN}>
+            <NavLink className={getNavLinkClass} to={PATHS.SIGNIN}>
               Sign in
             </NavLink>
-            <NavLink className="header_button" to={PATHS.SIGNUP}>
+            <NavLink className={getNavLinkClass} to={PATHS.SIGNUP}>
               Sing up
             </NavLink>
           </div>
