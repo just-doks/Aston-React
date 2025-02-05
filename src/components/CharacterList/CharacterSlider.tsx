@@ -23,19 +23,21 @@ export const CharacterSlider = () => {
     }
   }, [error]);
 
-  const handlePreviousPage = () => {
-    fetchCharacterPage(prevPage)
-      .then((data) => dispatch(setSearchResults(data)))
-      .catch((error) => {
-        dispatch(setSearchError(error));
-      });
+  const handlePreviousPage = async () => {
+    try {
+      const data = await fetchCharacterPage(prevPage);
+      dispatch(setSearchResults(data));
+    } catch (error) {
+      dispatch(setSearchError(error));
+    }
   };
-  const handleNextPage = () => {
-    fetchCharacterPage(nextPage)
-      .then((data) => dispatch(setSearchResults(data)))
-      .catch((error) => {
-        dispatch(setSearchError(error));
-      });
+  const handleNextPage = async () => {
+    try {
+      const data = await fetchCharacterPage(nextPage);
+      dispatch(setSearchResults(data));
+    } catch (error) {
+      dispatch(setSearchError(error));
+    }
   };
 
   return (

@@ -19,20 +19,22 @@ export const SearchBar: React.FC<{ filterPosition: string }> = (props) => {
   const navigate = useNavigate();
   const initialConfig = useSelector(searchConfig);
   const [dropdownVisible, setDropdownVisible] = useState(false);
-  const handleSubmit = (values: TypeFilters) => {
-    dispatch(configureSearch(values));
-    fetchFilteredCharacters(values)
-      .then((data) => dispatch(setSearchResults(data)))
-      .catch((error) => {
-        dispatch(setSearchError(error));
-      })
-      .finally(() => navigate(PATHS.SEARCH));
+  const handleSubmit = async (values: TypeFilters) => {
+    try {
+      dispatch(configureSearch(values));
+      const data = await fetchFilteredCharacters(values);
+      dispatch(setSearchResults(data));
+    } catch (error) {
+      dispatch(setSearchError(error));
+    } finally {
+      navigate(PATHS.SEARCH);
+    }
   };
 
   const dropdownToggle = () => {
     setDropdownVisible(!dropdownVisible);
   };
-  
+
   return (
     <Formik initialValues={initialConfig} onSubmit={handleSubmit}>
       <Form className="searchbar">
