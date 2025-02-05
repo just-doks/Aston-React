@@ -6,6 +6,7 @@ export type SearchState = {
   searchConfig: TypeFilters;
   searchResults: CharacterResponse;
   searchError: string;
+  isTelegramShareEnabled: boolean;
 };
 
 const initialState: SearchState = {
@@ -21,7 +22,8 @@ const initialState: SearchState = {
     },
     results: [],
   },
-  searchError: ''
+  searchError: '',
+  isTelegramShareEnabled: false
 };
 
 export const { reducer: searchReducer, actions: searchActions } = createSlice({
@@ -37,7 +39,10 @@ export const { reducer: searchReducer, actions: searchActions } = createSlice({
     setSearchError(state, action: PayloadAction<string>) {
         state.searchError = action.payload;
     },
+    enableTelegramShare(state, action: PayloadAction<{isTelegramShareEnabled: boolean}>) {
+      state.isTelegramShareEnabled = action.payload.isTelegramShareEnabled;
+    }
   },
 });
 
-export const { configureSearch, setSearchResults, setSearchError } = searchActions;
+export const { configureSearch, setSearchResults, setSearchError, enableTelegramShare } = searchActions;
