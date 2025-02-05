@@ -32,8 +32,6 @@ export const AuthForm = ({ type }: AuthFormType) => {
     },
     validationSchema: isSignup ? authValidationSchema : signInValidationSchema,
     enableReinitialize: true,
-    validationSchema: isSignup ? authValidationSchema : signInValidationSchema,
-    enableReinitialize: true,
     onSubmit: (values) => {
       if (isSignup) {
         dispatch(registerUser(values));
@@ -74,7 +72,6 @@ export const AuthForm = ({ type }: AuthFormType) => {
             onChange={formik.handleChange}
             value={formik.values.password}
             className="sign_input"
-            type="password"
             type="password"
             name="password"
           />

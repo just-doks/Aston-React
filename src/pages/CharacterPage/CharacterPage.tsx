@@ -7,8 +7,7 @@ import { FavoriteButton } from './FavoriteButton';
 
 export function CharacterPage() {
     const location = useLocation()
-    console.log(location)
-    const character: {character?: CharacterSchema} = location.state ?? {};
+    const character: CharacterSchema = location.state ?? {};
     const [checked, setChecked] = useState<boolean>(false);
     return(
         <> { character

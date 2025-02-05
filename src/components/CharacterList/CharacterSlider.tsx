@@ -3,14 +3,15 @@ import { CharacterCard } from "../CharacterCard";
 import { SvgButton } from "../../assets";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { searchError, searchResults } from "../../utils/selectors";
+import { searchError, searchResults, history } from "../../utils/selectors";
 import { setSearchResults, setSearchError } from "../../store/searchSlice";
-import { fetchCharacterPage } from "../../http/characterAPI";
+import { fetchCharacterPage, fetchFilteredCharacters } from "../../http/characterAPI";
 
 export const CharacterSlider = () => {
   const dispatch = useDispatch();
   const error = useSelector(searchError);
   const response = useSelector(searchResults);
+  const historyList = useSelector(history);
   const characters = response?.results || [];
   const nextPage = response?.info.next;
   const prevPage = response?.info.prev;
@@ -20,6 +21,9 @@ export const CharacterSlider = () => {
       throw new Error(error);
     } else {
       setIsMounted(!isMounted);
+    }
+    if (!characters.length && error === '' && historyList.length) {
+      fetchFilteredCharacters(historyList[0]).then(data => {dispatch(setSearchResults(data))})
     }
   }, [error]);
 
