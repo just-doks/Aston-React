@@ -5,6 +5,7 @@ import { PATHS } from "../../utils/constants";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../store/authSlice";
 import { loginUser, isAuth as auth } from "../../utils/selectors";
+import { getNavLinkClass } from "../../utils/getNavLinkClass";
 
 export const Header = () => {
 
@@ -17,8 +18,6 @@ export const Header = () => {
   const handleLogout = () => {
     dispatch(logout())
   }
-
-  const getNavLinkClass = ({isActive} : {isActive: boolean}) => isActive ? "header_button active" : "header_button"
 
   return (
     <header className="header">

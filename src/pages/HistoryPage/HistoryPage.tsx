@@ -26,7 +26,7 @@ export const HistoryPage = () => {
   return (
     <div className="container history_wrapper">
       <h1 className="history_title">Search history</h1>
-      {historyList.length !== 0 ? (
+      {historyList.length ? (
         <>
           <ul className="history_list">
             {historyList.map((entry, index) => (

@@ -12,10 +12,14 @@ export const SearchBar: React.FC<{ filterPosition: string }> = (props) => {
   const dispatch = useDispatch();
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const initialValues = useSelector(searchConfig)
-  const handleSubmit = (values:  TypeFilters) => {
-    dispatch(configureSearch(values))
-    dispatch(configureHistory(values))
-    fetchFilteredCharacters(values).then((data) => dispatch(setSearchResults(data)))
+
+  const handleSubmit = async (values: TypeFilters) => {
+    dispatch(configureSearch(values));
+    dispatch(configureHistory(values));
+
+    const data = await fetchFilteredCharacters(values);
+    
+    dispatch(setSearchResults(data));
   };
   const dropdownToggle = () => {
     setDropdownVisible(!dropdownVisible);
