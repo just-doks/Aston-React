@@ -48,7 +48,7 @@ export const SearchBar: React.FC<{ filterPosition: string }> = (props) => {
         {dropdownVisible ? (
           <FilterMenu position={props.filterPosition} />
         ) : (
-          <></>
+          null
         )}
         <Field
           type="text"
