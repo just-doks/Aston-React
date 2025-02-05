@@ -25,7 +25,7 @@ export function CharacterCard({character}: CharacterCardProps) {
                 <Link 
                     className="c-card-link"
                     to={PATHS.CHARACTER} 
-                    state={character}
+                    state={{character}}
                 >
                     <span>{character.name}</span>
                  </Link>
