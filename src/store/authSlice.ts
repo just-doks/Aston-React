@@ -48,17 +48,20 @@ export const {reducer: authReducer, actions: authActions} = createSlice({
     loginUser: (state, action: PayloadAction<User>) => {
       const foundUser = state.users.find(
         (user) =>
-          user.username === action.payload.username &&
-          user.password === action.payload.password
+          user.username === action.payload.username
       );
 
-      if (foundUser) {
+      if (!foundUser) {
+        state.error = "Incorrect login"
+      }
+      else if (foundUser.password !== action.payload.password) {
+        state.error = "Incorrect password"
+      }
+      else {
         state.loginUser = foundUser;
         saveLoginUserToLocalStorage(foundUser);
         state.isAuth = true;
         state.error = "";
-      } else {
-        state.error = "Incorrect login or password";
       }
     },
     logout: (state) => {

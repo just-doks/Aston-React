@@ -1,0 +1,1 @@
+export const getNavLinkClass = ({isActive} : {isActive: boolean}) => isActive ? "header_button active" : "header_button"
