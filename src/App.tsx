@@ -1,7 +1,7 @@
 import { useLayoutEffect } from "react";
 import { $host } from "./http";
 import "./App.css";
-import { AppRouter } from "./components/AppRouter";
+import { AppRouter } from "./components/Routing/AppRouter";
 import { useDispatch } from "react-redux";
 import { enableTelegramShare } from "./store/searchSlice";
 
