@@ -25,58 +25,62 @@ export const CharacterSlider = () => {
   const prevPage = response?.info.prev;
   useLayoutEffect(() => {
     if (error) {
-      console.log('ther is an error in the store')
       throw new Error(error);
     }
-    console.log('im rendering')
     const fetchIfEmpty = async () => {
       if (!characters.length && error === "" && historyList.length) {
         try {
-          console.log('fetch output is empty')
-          const data = await fetchFilteredCharacters(historyList[0])
+          const data = await fetchFilteredCharacters(historyList[0]);
           dispatch(setSearchResults(data));
         } catch (err) {
-          console.log(err.code)
           if ((err.code = "ERR_BAD_REQUEST")) {
             fetchAllCharacters().then((data) => {
               dispatch(setSearchResults(data));
             });
           } else {
-            throw new Error(error)
+            throw new Error(error);
           }
         }
       }
     };
-    fetchIfEmpty()
+    fetchIfEmpty();
     return () => {
       dispatch(clearSearchConfig());
     };
   }, [error]);
 
   const handlePreviousPage = async () => {
-    try {
-      const data = await fetchCharacterPage(prevPage);
-      dispatch(setSearchResults(data));
-    } catch (error) {
-      dispatch(setSearchError(error));
+    if (prevPage) {
+      try {
+        const data = await fetchCharacterPage(prevPage);
+        dispatch(setSearchResults(data));
+      } catch (error) {
+        dispatch(setSearchError(error));
+      }
     }
   };
   const handleNextPage = async () => {
-    try {
-      const data = await fetchCharacterPage(nextPage);
-      dispatch(setSearchResults(data));
-    } catch (error) {
-      dispatch(setSearchError(error));
+    if (nextPage) {
+      try {
+        const data = await fetchCharacterPage(nextPage);
+        dispatch(setSearchResults(data));
+      } catch (error) {
+        dispatch(setSearchError(error));
+      }
     }
   };
 
   return (
     <div className="character-slider">
       <button
-        className="character-slider_button-back"
+        className={
+          prevPage
+            ? "character-slider_button-back"
+            : "character-slider_button-back --inactive"
+        }
         onClick={handlePreviousPage}
       >
-        <SvgButton />
+        <SvgButton inactive={prevPage ? false : true} />
       </button>
       <ul className="character-slider_items">
         {characters.map((character) => (
@@ -84,10 +88,14 @@ export const CharacterSlider = () => {
         ))}
       </ul>
       <button
-        className="character-slider_button-forward"
+        className={
+          nextPage
+            ? "character-slider_button-forward"
+            : "character-slider_button-forward --inactive"
+        }
         onClick={handleNextPage}
       >
-        <SvgButton />
+        <SvgButton inactive={nextPage ? false : true} />
       </button>
     </div>
   );
