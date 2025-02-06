@@ -1,11 +1,19 @@
 import "./CharacterSlider.css";
 import { CharacterCard } from "../CharacterCard";
 import { SvgButton } from "../../assets";
-import { useEffect, useState } from "react";
+import { useLayoutEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { searchError, searchResults, history } from "../../utils/selectors";
-import { setSearchResults, setSearchError } from "../../store/searchSlice";
-import { fetchCharacterPage, fetchFilteredCharacters } from "../../http/characterAPI";
+import {
+  setSearchResults,
+  setSearchError,
+  clearSearchConfig,
+} from "../../store/searchSlice";
+import {
+  fetchCharacterPage,
+  fetchFilteredCharacters,
+  fetchAllCharacters,
+} from "../../http/characterAPI";
 
 export const CharacterSlider = () => {
   const dispatch = useDispatch();
@@ -15,16 +23,34 @@ export const CharacterSlider = () => {
   const characters = response?.results || [];
   const nextPage = response?.info.next;
   const prevPage = response?.info.prev;
-  const [isMounted, setIsMounted] = useState(false);
-  useEffect(() => {
-    if (isMounted) {
+  useLayoutEffect(() => {
+    if (error) {
+      console.log('ther is an error in the store')
       throw new Error(error);
-    } else {
-      setIsMounted(!isMounted);
     }
-    if (!characters.length && error === '' && historyList.length) {
-      fetchFilteredCharacters(historyList[0]).then(data => {dispatch(setSearchResults(data))})
-    }
+    console.log('im rendering')
+    const fetchIfEmpty = async () => {
+      if (!characters.length && error === "" && historyList.length) {
+        try {
+          console.log('fetch output is empty')
+          const data = await fetchFilteredCharacters(historyList[0])
+          dispatch(setSearchResults(data));
+        } catch (err) {
+          console.log(err.code)
+          if ((err.code = "ERR_BAD_REQUEST")) {
+            fetchAllCharacters().then((data) => {
+              dispatch(setSearchResults(data));
+            });
+          } else {
+            throw new Error(error)
+          }
+        }
+      }
+    };
+    fetchIfEmpty()
+    return () => {
+      dispatch(clearSearchConfig());
+    };
   }, [error]);
 
   const handlePreviousPage = async () => {
@@ -54,7 +80,7 @@ export const CharacterSlider = () => {
       </button>
       <ul className="character-slider_items">
         {characters.map((character) => (
-          <CharacterCard character={character} key={character.id}/>
+          <CharacterCard character={character} key={character.id} />
         ))}
       </ul>
       <button

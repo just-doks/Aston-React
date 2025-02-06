@@ -1,8 +1,8 @@
 import { FC } from "react";
-import { HomePage } from "./pages/HomePage";
+import { HomePage } from "./pages/HomePage/HomePage";
 import { PATHS } from "./utils/constants";
-import { SearchPage } from "./pages/SearchPage";
-import { CharacterPage } from "./pages/CharacterPage";
+import { SearchPage } from "./pages/SearchPage/SearchPage";
+import { CharacterPage } from "./pages/CharacterPage/";
 import { SignInPage, SignUpPage } from "./pages/AuthPages/AuthPages";
 import { HistoryPage } from "./pages/HistoryPage/HistoryPage";
 
