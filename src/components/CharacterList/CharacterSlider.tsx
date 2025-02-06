@@ -54,7 +54,7 @@ export const CharacterSlider = () => {
       </button>
       <ul className="character-slider_items">
         {characters.map((character) => (
-          <CharacterCard character={character} />
+          <CharacterCard character={character} key={character.id}/>
         ))}
       </ul>
       <button

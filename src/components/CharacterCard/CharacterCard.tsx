@@ -12,21 +12,20 @@ type CharacterCardProps = {
 
 export function CharacterCard({character}: CharacterCardProps) {
     const [checked, setChecked] = useState<boolean>(false);
-    const key = useId()
     function handleStarChange() {
         setChecked(!checked)
     }
 
     return (
-        <div className="c-card-container" key={key}>
+        <div className="c-card-container">
         { !character 
             ? <PlanetSpinner className="c-card-spinner"/>
             : <>
                 <img className="c-card-image" src={character.image} alt="character"/>
                 <Link 
                     className="c-card-link"
-                    to={PATHS.CHARACTER} 
-                    state={character}
+                    to={PATHS.CHARACTER}
+                    state={{character}}
                 >
                     <span>{character.name}</span>
                  </Link>
@@ -35,7 +34,7 @@ export function CharacterCard({character}: CharacterCardProps) {
                     checked={checked} 
                     onChange={handleStarChange}
                 />
-              </>  
+              </>
         }
         </div>
     )
