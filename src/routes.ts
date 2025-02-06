@@ -18,14 +18,14 @@ export const publicRoutes: RouteType[] = [
   },
   { path: PATHS.SIGNUP, Component: SignUpPage },
   { path: PATHS.SIGNIN, Component: SignInPage },
-];
-
-export const privateRoutes: RouteType[] = [
-  { path: PATHS.HISTORY, Component: HistoryPage },
   { path: PATHS.SEARCH, Component: SearchPage },
   {
     path: PATHS.CHARACTER,
     Component: CharacterPage
-}
+  }
+];
+
+export const privateRoutes: RouteType[] = [
+  { path: PATHS.HISTORY, Component: HistoryPage },
 ];
 
