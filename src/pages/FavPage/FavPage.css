@@ -1,0 +1,46 @@
+
+
+.fav-page-wrapper {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 16px;
+}
+
+
+.fav-page-title {
+    background-color: rgb(43, 74, 128);
+    padding: 16px;
+    border-radius: 30px;
+    color: #fff;
+    border: 1px solid black;
+}
+
+.fav-page-table {
+    display: grid;
+    width: 100%;
+    grid-template-columns: 1fr 8fr 1fr;
+}
+.fav-page-btn-left {
+    grid-column: 1 / 2;
+    display: flex;
+    align-items: center;
+
+    width: 60%;
+    height: auto;
+    aspect-ratio: 1 / 1;
+    margin: auto;
+}
+.fav-page-mid {
+    grid-column: 2 / 3;
+}
+.fav-page-btn-right {
+    grid-column: 3 / 4;
+    display: flex;
+    align-items: center;
+
+    width: 60%;
+    height: auto;
+    aspect-ratio: 1 / 1;
+    margin: auto;
+}

@@ -1,0 +1,21 @@
+
+
+.char-table {
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: start;
+}
+
+.char-table-cell {
+    flex: 0 0 calc(18%);
+}
+
+.char-table-cell:nth-child(n+6) {
+    margin-top: 2.5%;
+}
+
+.char-table-cell:not(:nth-child(5n+5)) {
+    margin-right: 2.5%;
+}
