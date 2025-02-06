@@ -10,6 +10,7 @@ export type SearchState = {
   history: TypeFilters[];
   searchResults: CharacterResponse;
   searchError: string;
+  isTelegramShareEnabled: boolean;
 };
 
 const initialState: SearchState = {
@@ -26,7 +27,8 @@ const initialState: SearchState = {
     },
     results: [],
   },
-  searchError: ''
+  searchError: '',
+  isTelegramShareEnabled: false
 };
 
 export const { reducer: searchReducer, actions: searchActions } = createSlice({
@@ -37,7 +39,6 @@ export const { reducer: searchReducer, actions: searchActions } = createSlice({
       state.searchConfig = action.payload;
     },
     configureHistory(state, action: PayloadAction<TypeFilters>) {
-
       state.history.unshift({id: getRandomId(5), ...action.payload, date: getCurrentDate()})
       saveSearchConfigToLocalStorage(state.history)
     },
@@ -51,10 +52,13 @@ export const { reducer: searchReducer, actions: searchActions } = createSlice({
     setSearchResults(state, action: PayloadAction<CharacterResponse>) {
       state.searchResults = action.payload;
     },
-    setError(state, action: PayloadAction<string>) {
+    setSearchError(state, action: PayloadAction<string>) {
         state.searchError = action.payload;
     },
+    enableTelegramShare(state, action: PayloadAction<{isTelegramShareEnabled: boolean}>) {
+      state.isTelegramShareEnabled = action.payload.isTelegramShareEnabled;
+    }
   },
 });
 
-export const { configureSearch, configureHistory, setSearchResults, clearHistory, clearSearchConfig } = searchActions;
+export const { configureSearch, configureHistory, setSearchResults, clearHistory, clearSearchConfig, setSearchError, enableTelegramShare } = searchActions;

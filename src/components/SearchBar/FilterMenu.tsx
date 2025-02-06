@@ -1,10 +1,8 @@
 import "./FilterMenu.css";
 import { Field } from "formik";
 
-
-
 export const FilterMenu: React.FC<{ position: string }> = (props) => {
-
+  
   return (
     <menu
       className={

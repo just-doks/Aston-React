@@ -7,7 +7,7 @@ import { loginUser, registerUser } from "../../store/authSlice";
 import { authValidationSchema, signInValidationSchema } from "../../utils/validationSchemes";
 import { error as authError } from "../../utils/selectors";
 import { useAuthRedirect } from "../../hooks/useAuthRedirect";
-import { useErrorClearOnRouteCange } from "../../hooks/useClearErrorOnRouteChange";
+import { useErrorClearOnRouteChange } from "../../hooks/useClearErrorOnRouteChange";
 
 type AuthFormType = {
   type: "signin" | "signup";
@@ -19,7 +19,7 @@ export const AuthForm = ({ type }: AuthFormType) => {
   const error = useSelector(authError);
   const dispatch = useDispatch();
   useAuthRedirect()
-  useErrorClearOnRouteCange()
+  useErrorClearOnRouteChange()
 
   type FormValues = {
     username: string;
@@ -85,9 +85,11 @@ export const AuthForm = ({ type }: AuthFormType) => {
         {isSignup ? (
           <p className="link">
             Already registered? <NavLink to={PATHS.SIGNIN}>Sign In</NavLink>
+            Already registered? <NavLink to={PATHS.SIGNIN}>Sign In</NavLink>
           </p>
         ) : (
           <p className="link">
+            New here? <NavLink to={PATHS.SIGNUP}>Sign Up</NavLink>
             New here? <NavLink to={PATHS.SIGNUP}>Sign Up</NavLink>
           </p>
         )}

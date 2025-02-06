@@ -1,5 +1,4 @@
 import { RootState } from "../store/store";
-import { createSelector } from "@reduxjs/toolkit";
 
 export const error = (state: RootState) => state.auth.error
 
@@ -16,3 +15,5 @@ export const searchError = (state: RootState) => state.search.searchError
 export const searchResults = (state: RootState) => state.search.searchResults
 
 export const history = (state: RootState) => state.search.history
+
+export const telegramFlag = (state: RootState) => state.search.isTelegramShareEnabled

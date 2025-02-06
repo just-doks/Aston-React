@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useId, useState } from "react";
 import { Link } from "react-router";
 import './CharacterCard.css';
 import type { CharacterSchema } from "src/http/characterTypes";
@@ -16,15 +16,15 @@ export function CharacterCard({character}: CharacterCardProps) {
         setChecked(!checked)
     }
 
-    return(
+    return (
         <div className="c-card-container">
         { !character 
             ? <PlanetSpinner className="c-card-spinner"/>
             : <>
-                <img className="c-card-image" src={character.image} alt="image"/>
+                <img className="c-card-image" src={character.image} alt="character"/>
                 <Link 
                     className="c-card-link"
-                    to={PATHS.CHARACTER} 
+                    to={PATHS.CHARACTER}
                     state={{character}}
                 >
                     <span>{character.name}</span>
@@ -34,7 +34,7 @@ export function CharacterCard({character}: CharacterCardProps) {
                     checked={checked} 
                     onChange={handleStarChange}
                 />
-              </>  
+              </>
         }
         </div>
     )
