@@ -61,4 +61,4 @@ export const { reducer: searchReducer, actions: searchActions } = createSlice({
   },
 });
 
-export const { configureSearch, configureHistory, setSearchResults, clearHistory, clearSearchConfig, setSearchError } = searchActions;
+export const { configureSearch, configureHistory, setSearchResults, clearHistory, clearSearchConfig, setSearchError, enableTelegramShare } = searchActions;

@@ -27,6 +27,5 @@ export const publicRoutes: RouteType[] = [
 
 export const privateRoutes: RouteType[] = [
   { path: PATHS.HISTORY, Component: HistoryPage },
-
 ];
 
