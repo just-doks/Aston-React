@@ -1,7 +1,7 @@
 import "./CharacterSlider.css";
 import { CharacterCard } from "../CharacterCard";
 import { SvgButton } from "../../assets";
-import { useLayoutEffect } from "react";
+import { useLayoutEffect, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { searchError, searchResults, history } from "../../utils/selectors";
 import {
@@ -23,6 +23,7 @@ export const CharacterSlider = () => {
   const characters = response?.results || [];
   const nextPage = response?.info.next;
   const prevPage = response?.info.prev;
+
   useLayoutEffect(() => {
     if (error) {
       throw new Error(error);
@@ -34,28 +35,34 @@ export const CharacterSlider = () => {
           dispatch(setSearchResults(data));
         } catch (err) {
           if ((err.code = "ERR_BAD_REQUEST")) {
-            fetchAllCharacters().then((data) => {
+            try {
+              const data = await fetchAllCharacters()
               dispatch(setSearchResults(data));
-            });
+            } catch (err) {
+              dispatch(setSearchError(err.code))
+            }
           } else {
-            throw new Error(error);
+            dispatch(setSearchError(err.code))
           }
         }
       }
     };
     fetchIfEmpty();
+  }, [error]);
+
+  useEffect(() => {
     return () => {
       dispatch(clearSearchConfig());
     };
-  }, [error]);
+  })
 
   const handlePreviousPage = async () => {
     if (prevPage) {
       try {
         const data = await fetchCharacterPage(prevPage);
         dispatch(setSearchResults(data));
-      } catch (error) {
-        dispatch(setSearchError(error));
+      } catch (err) {
+        dispatch(setSearchError(err.code));
       }
     }
   };
@@ -64,8 +71,8 @@ export const CharacterSlider = () => {
       try {
         const data = await fetchCharacterPage(nextPage);
         dispatch(setSearchResults(data));
-      } catch (error) {
-        dispatch(setSearchError(error));
+      } catch (err) {
+        dispatch(setSearchError(err.code));
       }
     }
   };

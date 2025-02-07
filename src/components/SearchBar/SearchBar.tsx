@@ -23,7 +23,7 @@ export const SearchBar: React.FC<{ filterPosition: string }> = (props) => {
     const data = await fetchFilteredCharacters(values);
     dispatch(setSearchResults(data));
     } catch (error) {
-      dispatch(setSearchError(error));
+      dispatch(setSearchError(error.code));
     } finally {
       navigate(PATHS.SEARCH);
     }
