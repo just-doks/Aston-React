@@ -19,11 +19,16 @@ export const SearchBar: React.FC<{ filterPosition: string }> = (props) => {
   const handleSubmit = async (values: TypeFilters) => {
     try {
     dispatch(configureSearch(values));
-    dispatch(configureHistory(values));
+
     const data = await fetchFilteredCharacters(values);
     dispatch(setSearchResults(data));
+
+    if(values.name) {
+      dispatch(configureHistory(values));
+    }
     } catch (error) {
       dispatch(setSearchError(error));
+      dispatch(configureHistory({...values, error: "There is no character at this dementions"}));
     } finally {
       navigate(PATHS.SEARCH);
     }

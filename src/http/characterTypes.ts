@@ -1,3 +1,4 @@
+import { error } from './../utils/selectors';
 /**
  * Схема запрашиваемого объекта персонажа.
  */
@@ -41,4 +42,5 @@ export type TypeFilters = {
     gender?: '' | 'male' | 'female' | 'genderless' | 'unknown';
     date?: string
     id?: string
+    error?: string
 }

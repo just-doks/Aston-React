@@ -1,9 +1,10 @@
 import { useDispatch, useSelector } from "react-redux";
 import "./HistoryPage.css";
 import { history } from "../../utils/selectors";
-import { clearHistory, configureSearch } from "../../store/searchSlice";
+import { clearHistory, configureSearch, setSearchResults, setSearchError } from "../../store/searchSlice";
 import { useNavigate } from "react-router";
 import { PATHS } from "../../utils/constants";
+import { fetchFilteredCharacters } from "../../http/characterAPI";
 
 export const HistoryPage = () => {
   const historyList = useSelector(history);
@@ -14,14 +15,23 @@ export const HistoryPage = () => {
     dispatch(clearHistory());
   };
 
-  const handleSelectHistoryItem = (id: string) => {
-    const existingHistoryItem = historyList.find((historyItem) => historyItem.id === id)
+  const handleSelectHistoryItem = async (id: string) => {
+    const existingHistoryItem = historyList.find(
+      (historyItem) => historyItem.id === id
+    );
 
-    if(existingHistoryItem) {
-      dispatch(configureSearch(existingHistoryItem))
-      navigate(PATHS.SEARCH)
+    if (existingHistoryItem) {
+      dispatch(configureSearch(existingHistoryItem));
+      try {
+        const data = await fetchFilteredCharacters(existingHistoryItem);
+        dispatch(setSearchResults(data));
+      } catch (error) {
+        dispatch(setSearchError(error));
+      } finally {
+        navigate(PATHS.SEARCH);
+      }
     }
-  }
+  };
 
   return (
     <div className="container history_wrapper">
@@ -30,8 +40,12 @@ export const HistoryPage = () => {
         <>
           <ul className="history_list">
             {historyList.map((entry, index) => (
-              <li key={index} onClick={() => handleSelectHistoryItem(entry.id)} className="history_item">
-                <span className="history_item-name">{entry.name}</span>
+              <li
+                key={index}
+                onClick={() => handleSelectHistoryItem(entry.id)}
+                className="history_item"
+              >
+                <span className="history_item-name">{entry.error ? `${entry.error}: ${entry.name}` : entry.name}</span>
                 <span className="history_item-date">{entry.date}</span>
               </li>
             ))}
