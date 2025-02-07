@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "./SearchBar.css";
 import { FilterMenu } from "./FilterMenu";
-import { Formik, Form, Field, useFormik } from "formik";
+import { Formik, Form, Field } from "formik";
 import {
   configureHistory,
   configureSearch,
@@ -11,7 +11,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { TypeFilters } from "../../http/characterTypes";
 import { fetchFilteredCharacters } from "../../http/characterAPI";
-import { searchConfig } from "../../utils/selectors";
+import { searchConfig, searchError } from "../../utils/selectors";
 import { useNavigate } from "react-router";
 import { PATHS } from "../../utils/constants";
 
@@ -20,14 +20,13 @@ export const SearchBar: React.FC<{ filterPosition: string }> = (props) => {
   const navigate = useNavigate();
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const initialValues = useSelector(searchConfig);
-
+  const error = useSelector(searchError)
   const handleSubmit = async (values: TypeFilters) => {
     try {
       dispatch(configureSearch(values));
-
+      dispatch(setSearchError(""))
       const data = await fetchFilteredCharacters(values);
       dispatch(setSearchResults(data));
-
       if (values.name) {
         dispatch(configureHistory(values));
       }

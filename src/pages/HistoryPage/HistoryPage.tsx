@@ -21,6 +21,7 @@ export const HistoryPage = () => {
     );
 
     if (existingHistoryItem) {
+      dispatch(setSearchError(""))
       dispatch(configureSearch(existingHistoryItem));
       try {
         const data = await fetchFilteredCharacters(existingHistoryItem);

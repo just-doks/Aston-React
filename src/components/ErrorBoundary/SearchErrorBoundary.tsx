@@ -31,8 +31,8 @@ class ErrorBoundary extends Component<
     this.setState({ hasError: true, error });
   }
   componentWillUnmount(): void {
-    this.props.setSearchError("");
-    this.setState({ hasError: false });
+      this.props.setSearchError("");
+      this.setState({ hasError: false });
   }
 
   render(): ReactNode {
