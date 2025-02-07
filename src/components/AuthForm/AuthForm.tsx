@@ -85,11 +85,9 @@ export const AuthForm = ({ type }: AuthFormType) => {
         {isSignup ? (
           <p className="link">
             Already registered? <NavLink to={PATHS.SIGNIN}>Sign In</NavLink>
-            Already registered? <NavLink to={PATHS.SIGNIN}>Sign In</NavLink>
           </p>
         ) : (
           <p className="link">
-            New here? <NavLink to={PATHS.SIGNUP}>Sign Up</NavLink>
             New here? <NavLink to={PATHS.SIGNUP}>Sign Up</NavLink>
           </p>
         )}
