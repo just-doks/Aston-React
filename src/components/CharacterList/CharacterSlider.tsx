@@ -1,7 +1,7 @@
 import "./CharacterSlider.css";
 import { CharacterCard } from "../CharacterCard";
 import { SvgButton } from "../../assets";
-import { useLayoutEffect, useEffect } from "react";
+import { useEffect, useLayoutEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { searchError, searchResults, history } from "../../utils/selectors";
 import {
