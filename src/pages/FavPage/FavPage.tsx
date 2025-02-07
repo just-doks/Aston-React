@@ -1,57 +1,80 @@
-
-
 import { useEffect, useState } from 'react';
-import { ArrowButton } from './ArrowButton';
+import { useDispatch, useSelector } from 'react-redux';
 import './FavPage.css';
 import { CharacterTable } from 'src/components/CharacterTable';
-import { fetchAllCharacters, fetchCharacterPage } from 'src/http/characterAPI';
+import { fetchMultipleCharacters } from 'src/http/characterAPI';
 import { CharacterSchema } from 'src/http/characterTypes';
+import { 
+    removeFavoritesFromQueue, 
+    selectFavorite } from 'src/store/favoriteSlice'; 
+import type { favoriteState } from 'src/store/favoriteSlice';
 
 export function FavPage() {
-    const [characters, setCharacters] = useState<CharacterSchema[]>([]);
-    const [prev, setPrev] = useState<string>(null);
-    const [next, setNext] = useState<string>(null);
+    const favorite: favoriteState = useSelector(selectFavorite);
+    const dispatch = useDispatch();
+
+    const [ids, setIds] = useState<number[]>([]);
+
+    const [pages, setPages] = useState(1);
+    const [currentPage, setCurrentPage] = useState(1);
+
+    const [characters, setCharacters] = useState<CharacterSchema[]>([] as CharacterSchema[]);
+
+    const [prev, setPrev] = useState<boolean>(false);
+    const [next, setNext] = useState<boolean>(false);
+
     useEffect(() => {
-        fetchAllCharacters()
-        .then((data) => {
-            setCharacters(data.results);
-            if (data.info.next) {
-                console.log(data.info.next)
-                setNext(data.info.next);
-            }
-            if (data.info.prev) {
-                console.log(data.info.prev)
-                setPrev(data.info.prev);
-            }
-        })
-    }, [])
-    function handleBtnClick(page) {
         return () => {
-            fetchCharacterPage(page)
-            .then((data) => {
-                setCharacters(data.results);
-                setNext(data.info.next);
-                setPrev(data.info.prev);
-            })
+            dispatch(removeFavoritesFromQueue());
         }
+    }, [])
+
+    useEffect(() => {
+        const _pages = Math.ceil(favorite.ids.length / 20);
+        if (pages !== _pages)
+            setPages(Math.ceil(favorite.ids.length / 20));
+    }, [favorite])
+
+    useEffect(() => {
+        if (currentPage > pages)
+            setCurrentPage(pages);
+    }, [pages])
+
+    useEffect(() => {
+        const start = (currentPage - 1) * 20;
+        const end = (currentPage -  1) * 20 + 20;
+        setIds(favorite.ids.slice(start, end));
+
+        setPrev(currentPage > 1);
+        setNext(currentPage < pages);
+    }, [currentPage, pages])
+
+    useEffect(() => {
+        fetchMultipleCharacters(ids)
+        .then(data => {
+            setCharacters(data);
+        })
+    }, [ids])
+
+    function handleLeftClick() {
+        dispatch(removeFavoritesFromQueue());
+        setCurrentPage(currentPage - 1);
+    }
+    function handleRightClick() {
+        dispatch(removeFavoritesFromQueue());
+        setCurrentPage(currentPage + 1);
     }
 
     return(
         <div className="container fav-page-wrapper">
             <h1 className='fav-page-title'>The collection of favorite characters</h1>
-            <div className='fav-page-table'>
-                { prev && (
-                    <div className='fav-page-btn-left'>
-                        <ArrowButton direction='left' onClick={handleBtnClick(prev)}/>
-                    </div>
-                )}
-                <CharacterTable className="fav-page-mid" characters={characters.slice(0, 20)}/>
-                { next && (
-                    <div className='fav-page-btn-right'>
-                        <ArrowButton direction='right' onClick={handleBtnClick(next)}/>
-                    </div>
-                )}
-            </div>
+            <CharacterTable 
+                characters={characters}
+                isLeft={prev}
+                onLeftClick={handleLeftClick}
+                isRight={next}
+                onRightClick={handleRightClick}
+            />
         </div>
     )
 }

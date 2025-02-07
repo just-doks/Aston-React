@@ -36,12 +36,12 @@
 }
 .c-card-container:hover > .c-card-fav > .star-btn-icon {
     visibility: visible;
-    opacity: 0.7;
+    opacity: 0.8;
 }
 .c-card-container > .c-card-fav > input:checked + .star-btn-icon {
     visibility: visible;
-    opacity: 0.7;
-    transition: opacity .1s ease-in;
+    opacity: 0.8;
+    transition: opacity 0s ease-in;
 }
 
 

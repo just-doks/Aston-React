@@ -1,1 +1,1 @@
-export {CharacterCard} from './CharacterCard.tsx';
+export * from './CharacterCard.tsx';

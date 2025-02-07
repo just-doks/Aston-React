@@ -1,17 +1,23 @@
-
 import { CharacterCard } from "src/components/CharacterCard";
-
-import { type CharacterSchema } from "src/http/characterTypes"
-
+import { type CharacterSchema } from "src/http/characterTypes";
+import { ArrowButton } from "./ArrowButton";
 import './CharacterTable.css';
 
-type CharacterTableProps = {
-    characters?: CharacterSchema[],
+type TableProps = {
+    characters: CharacterSchema[],
     className?: string
 }
 
-export function CharacterTable({characters = [], className} : CharacterTableProps) {
+type CharacterTableProps = {
+    characters: CharacterSchema[],
+    isLeft?: boolean,
+    onLeftClick?: () => void,
+    isRight?: boolean,
+    onRightClick?: () => void,
+    className?: string
+}
 
+export function Table({characters, className} : TableProps) {
     return(
         <div className={"char-table" + (className ? ` ${className}` : '')}>
             { characters.map((c) => (
@@ -19,6 +25,28 @@ export function CharacterTable({characters = [], className} : CharacterTableProp
                     <CharacterCard character={c}/> 
                 </div>
             ))}
+        </div>
+    )
+}
+
+export function CharacterTable({
+    characters = [] as CharacterSchema[],
+    isLeft, onLeftClick, isRight, onRightClick,
+    className
+}: CharacterTableProps) {
+    return(
+        <div className={"char-table-grid" + (className ? ` ${className}` : '')}>
+            { isLeft && (
+                <div className='char-table-btn-left'>
+                    <ArrowButton direction='left' onClick={onLeftClick}/>
+                </div>
+            )}
+            <Table className="char-table-grid-mid" characters={characters}/>
+            { isRight && (
+                <div className='char-table-btn-right'>
+                    <ArrowButton direction='right' onClick={onRightClick}/>
+                </div>
+            )}
         </div>
     )
 }
