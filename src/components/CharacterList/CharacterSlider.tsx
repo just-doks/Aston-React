@@ -1,14 +1,10 @@
 import "./CharacterSlider.css";
 import { CharacterCard } from "../CharacterCard";
 import { SvgButton } from "../../assets";
-import { useEffect, useLayoutEffect } from "react";
+import { useLayoutEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { searchError, searchResults, history } from "../../utils/selectors";
-import {
-  setSearchResults,
-  setSearchError,
-  clearSearchConfig,
-} from "../../store/searchSlice";
+import { setSearchResults, setSearchError,} from "../../store/searchSlice";
 import {
   fetchCharacterPage,
   fetchFilteredCharacters,
@@ -49,12 +45,6 @@ export const CharacterSlider = () => {
     };
     fetchIfEmpty();
   }, [error]);
-
-  useEffect(() => {
-    return () => {
-      dispatch(clearSearchConfig());
-    };
-  })
 
   const handlePreviousPage = async () => {
     if (prevPage) {
