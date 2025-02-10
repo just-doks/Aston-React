@@ -3,68 +3,30 @@ import { CharacterCard } from "../CharacterCard";
 import { SvgButton } from "../../assets";
 import { useLayoutEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { searchError, searchResults, history } from "../../utils/selectors";
-import { setSearchResults, setSearchError,} from "../../store/searchSlice";
-import {
-  fetchCharacterPage,
-  fetchFilteredCharacters,
-  fetchAllCharacters,
-} from "../../http/characterAPI";
+import { searchError, searchResults } from "../../utils/selectors";
+import { AppDispatch } from "../../store/store";
+import { fetchCharacterPageThunk, fetchIfEmptyThunk } from "../../store/searchThunks";
 
 export const CharacterSlider = () => {
-  const dispatch = useDispatch();
-  const error = useSelector(searchError);
+  const dispatch = useDispatch<AppDispatch>();
   const response = useSelector(searchResults);
-  const historyList = useSelector(history);
+  const error = useSelector(searchError)
   const characters = response?.results || [];
-  const nextPage = response?.info.next;
-  const prevPage = response?.info.prev;
+  const nextPage = response?.info?.next
+  const prevPage = response?.info?.prev
 
   useLayoutEffect(() => {
     if (error) {
       throw new Error(error);
     }
-    const fetchIfEmpty = async () => {
-      if (!characters.length && error === "" && historyList.length) {
-        try {
-          const data = await fetchFilteredCharacters(historyList[0]);
-          dispatch(setSearchResults(data));
-        } catch (err) {
-          if ((err.code = "ERR_BAD_REQUEST")) {
-            try {
-              const data = await fetchAllCharacters()
-              dispatch(setSearchResults(data));
-            } catch (err) {
-              dispatch(setSearchError(err.code))
-            }
-          } else {
-            dispatch(setSearchError(err.code))
-          }
-        }
-      }
-    };
-    fetchIfEmpty();
+    dispatch(fetchIfEmptyThunk())
   }, [error]);
 
-  const handlePreviousPage = async () => {
-    if (prevPage) {
-      try {
-        const data = await fetchCharacterPage(prevPage);
-        dispatch(setSearchResults(data));
-      } catch (err) {
-        dispatch(setSearchError(err.code));
-      }
-    }
+  const handlePreviousPage = () => {
+    dispatch(fetchCharacterPageThunk("prevPage"))
   };
-  const handleNextPage = async () => {
-    if (nextPage) {
-      try {
-        const data = await fetchCharacterPage(nextPage);
-        dispatch(setSearchResults(data));
-      } catch (err) {
-        dispatch(setSearchError(err.code));
-      }
-    }
+  const handleNextPage = () => {
+    dispatch(fetchCharacterPageThunk("nextPage"))
   };
 
   return (

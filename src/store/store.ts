@@ -7,6 +7,8 @@ export const store = configureStore({
         auth: authReducer,
         search: searchReducer
     },
+    middleware: (getDefaultMiddleware) =>
+        getDefaultMiddleware(),
     devTools: true
 })
 

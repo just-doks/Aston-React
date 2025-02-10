@@ -1,36 +1,29 @@
 import { useDispatch, useSelector } from "react-redux";
 import "./HistoryPage.css";
 import { history } from "../../utils/selectors";
-import { clearHistory, configureSearch, setSearchResults, setSearchError } from "../../store/searchSlice";
+import { clearHistory } from "../../store/searchSlice";
+import { AppDispatch } from "../../store/store";
+import { fetchFilteredCharactersThunk } from "../../store/searchThunks";
 import { useNavigate } from "react-router";
 import { PATHS } from "../../utils/constants";
-import { fetchFilteredCharacters } from "../../http/characterAPI";
+
 
 export const HistoryPage = () => {
   const historyList = useSelector(history);
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate()
 
   const handleClick = () => {
     dispatch(clearHistory());
   };
 
-  const handleSelectHistoryItem = async (id: string) => {
+  const handleSelectHistoryItem = (id: string) => {
     const existingHistoryItem = historyList.find(
       (historyItem) => historyItem.id === id
     );
 
     if (existingHistoryItem) {
-      dispatch(setSearchError(""))
-      dispatch(configureSearch(existingHistoryItem));
-      try {
-        const data = await fetchFilteredCharacters(existingHistoryItem);
-        dispatch(setSearchResults(data));
-      } catch (error) {
-        dispatch(setSearchError(error.code));
-      } finally {
-        navigate(PATHS.SEARCH);
-      }
+      dispatch(fetchFilteredCharactersThunk({data: existingHistoryItem, isWriteToHistory: false})).finally(() => navigate(PATHS.SEARCH))
     }
   };
 
