@@ -25,6 +25,7 @@ export const CharacterSlider = () => {
   const handlePreviousPage = () => {
     dispatch(fetchCharacterPageThunk("prevPage"))
   };
+  
   const handleNextPage = () => {
     dispatch(fetchCharacterPageThunk("nextPage"))
   };

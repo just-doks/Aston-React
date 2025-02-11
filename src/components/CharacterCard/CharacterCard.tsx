@@ -4,7 +4,7 @@ import './CharacterCard.css';
 import type { CharacterSchema } from "src/http/characterTypes";
 import { PATHS } from "src/utils/constants";
 import { StarButton } from "./StarButton";
-import { PlanetSpinner } from "./PlanetSpinner";
+import { PlanetSpinner } from "../../assets/PlanetSpinner";
 
 type CharacterCardProps = {
     character: CharacterSchema
