@@ -1,7 +1,12 @@
 import { combineReducers, configureStore, Tuple } from "@reduxjs/toolkit";
 import {authReducer} from "./authSlice"
 import {searchReducer} from "./searchSlice"
-import { favoriteReducer, favMiddleware } from "./favoriteSlice";
+import { favoriteReducer } from "./favoriteSlice";
+import {
+    favMiddleware,
+    favThunk
+} from 'src/middlewares/favoriteMiddlewares.ts';
+
 
 const rootReduceer = combineReducers({
     auth: authReducer,
@@ -11,7 +16,7 @@ const rootReduceer = combineReducers({
 
 export const store = configureStore({
     reducer: rootReduceer,
-    middleware: () => new Tuple(favMiddleware),
+    middleware: () => new Tuple(favMiddleware, favThunk),
     devTools: true
 })
 

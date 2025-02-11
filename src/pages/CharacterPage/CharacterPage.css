@@ -16,6 +16,20 @@
     border: solid;
     border-color: hsl(218, 50%, 20%);
 }
+.c-page-spinner-wrapper {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    aspect-ratio: 1 / 1;
+    background-color: rgb(43, 74, 128);
+    border: solid;
+    border-color: hsl(218, 50%, 20%);
+    border-radius: 20px;
+}
+.c-page-spinner {
+    grid-column: 2 / 4;
+    grid-row: 2 / 4;
+}
 .c-page-fav {
     display: block;
     margin-top: 5px;

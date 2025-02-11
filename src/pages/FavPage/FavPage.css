@@ -44,3 +44,7 @@
     aspect-ratio: 1 / 1;
     margin: auto;
 }
+
+.fav-page-spinner {
+    width: 100px !important;
+}

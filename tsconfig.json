@@ -11,7 +11,14 @@
     "forceConsistentCasingInFileNames": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"]
+      "#presentationals/*": ["./src/components/presentationals/*"],
+      "#containers/*": ["./src/components/containers/*"],
+      "#hooks/*": ["src/hooks/*"],
+      "#http/*": ["src/http/*"],
+      "#pages/*": ["src/pages/*"],
+      "#store/*": ["src/store/*"],
+      "#middlewares/*": ["src/middlewares/*"],
+      "#utils/*": ["src/utils/*"]
     }
   },
   "include": ["src"]

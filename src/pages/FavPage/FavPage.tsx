@@ -1,80 +1,24 @@
-import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { Suspense, lazy } from "react";
+import { useDispatch } from "react-redux";
+import { removeFavoritesFromQueue } from '#store/favoriteSlice'; 
+import { useFuncOnUpdate } from '#hooks/useFuncOnUpdate';
 import './FavPage.css';
-import { CharacterTable } from 'src/components/CharacterTable';
-import { fetchMultipleCharacters } from 'src/http/characterAPI';
-import { CharacterSchema } from 'src/http/characterTypes';
-import { 
-    removeFavoritesFromQueue, 
-    selectFavorite } from 'src/store/favoriteSlice'; 
-import type { favoriteState } from 'src/store/favoriteSlice';
+
+const CharacterTable = lazy(() => import('#containers/CharacterTable').then(module => ({default: module.CharacterTable})));
 
 export function FavPage() {
-    const favorite: favoriteState = useSelector(selectFavorite);
     const dispatch = useDispatch();
-
-    const [ids, setIds] = useState<number[]>([]);
-
-    const [pages, setPages] = useState(1);
-    const [currentPage, setCurrentPage] = useState(1);
-
-    const [characters, setCharacters] = useState<CharacterSchema[]>([] as CharacterSchema[]);
-
-    const [prev, setPrev] = useState<boolean>(false);
-    const [next, setNext] = useState<boolean>(false);
-
-    useEffect(() => {
-        return () => {
-            dispatch(removeFavoritesFromQueue());
-        }
-    }, [])
-
-    useEffect(() => {
-        const _pages = Math.ceil(favorite.ids.length / 20);
-        if (pages !== _pages)
-            setPages(Math.ceil(favorite.ids.length / 20));
-    }, [favorite])
-
-    useEffect(() => {
-        if (currentPage > pages)
-            setCurrentPage(pages);
-    }, [pages])
-
-    useEffect(() => {
-        const start = (currentPage - 1) * 20;
-        const end = (currentPage -  1) * 20 + 20;
-        setIds(favorite.ids.slice(start, end));
-
-        setPrev(currentPage > 1);
-        setNext(currentPage < pages);
-    }, [currentPage, pages])
-
-    useEffect(() => {
-        fetchMultipleCharacters(ids)
-        .then(data => {
-            setCharacters(data);
-        })
-    }, [ids])
-
-    function handleLeftClick() {
+    const favPageRef = useFuncOnUpdate<HTMLDivElement>(removeFavorites);
+    function removeFavorites() {
         dispatch(removeFavoritesFromQueue());
-        setCurrentPage(currentPage - 1);
     }
-    function handleRightClick() {
-        dispatch(removeFavoritesFromQueue());
-        setCurrentPage(currentPage + 1);
-    }
-
-    return(
-        <div className="container fav-page-wrapper">
+    
+    return (
+        <div className="container fav-page-wrapper" ref={favPageRef}>
             <h1 className='fav-page-title'>The collection of favorite characters</h1>
-            <CharacterTable 
-                characters={characters}
-                isLeft={prev}
-                onLeftClick={handleLeftClick}
-                isRight={next}
-                onRightClick={handleRightClick}
-            />
+            <Suspense fallback={<h1 className="fav-page-title">LOADING...</h1>}>
+                <CharacterTable />
+            </Suspense>
         </div>
     )
 }
