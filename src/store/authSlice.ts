@@ -11,7 +11,7 @@ import {
 const storedUser = loadLoginUser();
 const initialUsers = loadUsersFromLocalStorage()
 
-const usersAdapter = createEntityAdapter({
+export const usersAdapter = createEntityAdapter({
   selectId: (user: User) => user.username
 })
 
