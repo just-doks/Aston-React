@@ -1,4 +1,4 @@
-import { TypeFilters } from "../http/characterTypes";
+import { HistoryItemType } from "../http/characterTypes";
 
 export type User = {
     id?: string;
@@ -37,10 +37,10 @@ export const removeItemFromLocalStorage = (item: string) => {
     localStorage.removeItem(item);
 };
 
-export const saveSearchConfigToLocalStorage = (searchConfig: TypeFilters[]) => {
+export const saveSearchConfigToLocalStorage = (searchConfig: HistoryItemType[]) => {
     localStorage.setItem(LOCAL_STORAGE_KEYS.SEARCH_HISTORY, JSON.stringify(searchConfig))
 }
 
-export const loadSearchConfigFromLocalStorage = (): TypeFilters[] => {
+export const loadSearchConfigFromLocalStorage = (): HistoryItemType[] => {
     return JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEYS.SEARCH_HISTORY) || "[]");
 }

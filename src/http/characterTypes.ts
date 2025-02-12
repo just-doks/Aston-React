@@ -40,7 +40,17 @@ export type TypeFilters = {
     name: string;
     status?: '' | 'alive' | 'dead' | 'unknown';
     gender?: '' | 'male' | 'female' | 'genderless' | 'unknown';
-    date?: string
-    id?: string
     error?: string
 }
+
+export type HistoryItemType = TypeFilters & {
+    id: string;
+    date: string;
+    username: string;
+};
+
+export type User = {
+    id?: string;
+    username: string;
+    password: string;
+};

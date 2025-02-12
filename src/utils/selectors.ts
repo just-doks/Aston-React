@@ -1,3 +1,4 @@
+import { createSelector } from "@reduxjs/toolkit";
 import { RootState } from "../store/store";
 
 export const error = (state: RootState) => state.auth.error
@@ -15,3 +16,8 @@ export const searchResults = (state: RootState) => state.search.searchResults
 export const history = (state: RootState) => state.search.history
 
 export const telegramFlag = (state: RootState) => state.search.isTelegramShareEnabled
+
+export const authUserHistory = createSelector(
+    [history, loginUser], 
+    (history, loginUser) => history.filter((historyItem) => historyItem.username === loginUser.username)
+)

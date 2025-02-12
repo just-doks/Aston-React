@@ -65,5 +65,10 @@
 }
 
 .history_message {
+    background-color: rgb(43, 74, 128);
+    padding: 16px;
+    border-radius: 30px;
     color: #fff;
+    border: 1px solid black;
+    font-weight: 500;
 }
