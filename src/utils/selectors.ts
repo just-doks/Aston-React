@@ -21,3 +21,5 @@ export const authUserHistory = createSelector(
     [history, loginUser], 
     (history, loginUser) => history.filter((historyItem) => historyItem.username === loginUser.username)
 )
+
+export const isLoading = (state: RootState) => state.loader.isLoading

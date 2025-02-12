@@ -3,6 +3,7 @@ import { Layout } from "./Layout";
 import { PATHS } from "src/utils/constants";
 import { privateRoutes, publicRoutes, RouteType } from "src/routes";
 import { ProtectedRoutes } from "./ProtectedRoutes";
+import { useLoader } from "../../hooks/useLoader";
 
 const renderRoutes = (routes: RouteType[]) => {
   return routes.map(({ path, Component }) => (
@@ -10,8 +11,11 @@ const renderRoutes = (routes: RouteType[]) => {
   ));
 };
 
-export const AppRouter = () => (
+export const AppRouter = () => {
+  const loader = useLoader()
+  return (
   <BrowserRouter>
+    {loader}
     <Routes>
       <Route element={<Layout />}>
         {renderRoutes(publicRoutes)}
@@ -22,4 +26,4 @@ export const AppRouter = () => (
       </Route>
     </Routes>
   </BrowserRouter>
-);
+)};

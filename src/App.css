@@ -67,3 +67,22 @@ button {
 ul {
     list-style: none;
 }
+
+.loader-spinner{
+    width: 300px;
+    height: 300px;
+    margin-top: 50px;
+}
+
+.loader-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+  }

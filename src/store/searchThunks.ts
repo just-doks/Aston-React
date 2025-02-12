@@ -14,6 +14,7 @@ import { TypeFilters, HistoryItemType } from "../http/characterTypes";
 import { getRandomId } from "../utils/randomId";
 import { getCurrentDate } from "../utils/getDate";
 import { saveSearchConfigToLocalStorage } from "../utils/localStorageFunc";
+import { setIsLoading } from "./loaderSlice";
 
 type FilteredCharactersArgs = {
   data: TypeFilters;
@@ -30,6 +31,7 @@ export const fetchIfEmptyThunk = createAsyncThunk<
 
   if (!characters.length && !searchError && history.length) {
     try {
+      dispatch(setIsLoading(true))
       const data = await fetchFilteredCharacters(history[0]);
       dispatch(setSearchResults(data));
     } catch (err) {
@@ -43,6 +45,8 @@ export const fetchIfEmptyThunk = createAsyncThunk<
       } else {
         dispatch(setSearchError(err.code));
       }
+    } finally {
+      dispatch(setIsLoading(false))
     }
   }
 });
@@ -60,10 +64,13 @@ export const fetchCharacterPageThunk = createAsyncThunk<
 
   if (url) {
     try {
+      dispatch(setIsLoading(true))
       const data = await fetchCharacterPage(url);
       dispatch(setSearchResults(data));
     } catch (err) {
       dispatch(setSearchError(err.code));
+    } finally {
+      dispatch(setIsLoading(false))
     }
   }
 });
@@ -78,6 +85,7 @@ export const fetchFilteredCharactersThunk = createAsyncThunk<
     const { isAuth } = getState().auth
     const writeCondition = isWriteToHistory && isAuth
     try {
+      dispatch(setIsLoading(true))
       dispatch(setSearchError(""));
       dispatch(configureSearch(data));
       const searchResults = await fetchFilteredCharacters(data);
@@ -96,6 +104,8 @@ export const fetchFilteredCharactersThunk = createAsyncThunk<
           })
         );
       }
+    } finally {
+      dispatch(setIsLoading(false))
     }
   }
 );
