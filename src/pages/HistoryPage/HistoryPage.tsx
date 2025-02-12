@@ -17,13 +17,15 @@ export const HistoryPage = () => {
     dispatch(clearHistory());
   };
 
-  const handleSelectHistoryItem = (id: string) => {
+  const handleSelectHistoryItem = (ids: string) => {
     const existingHistoryItem = historyList.find(
-      (historyItem) => historyItem.id === id
+      (historyItem) => historyItem.id === ids
     );
 
+    const {id, username, date, ...restData} = existingHistoryItem
+
     if (existingHistoryItem) {
-      dispatch(fetchFilteredCharactersThunk({data: existingHistoryItem, isWriteToHistory: false})).finally(() => navigate(PATHS.SEARCH))
+      dispatch(fetchFilteredCharactersThunk({data: restData, isWriteToHistory: false})).finally(() => navigate(PATHS.SEARCH))
     }
   };
 
