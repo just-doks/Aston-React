@@ -1,4 +1,4 @@
-import { PlanetSpinner } from "../components/CharacterCard/PlanetSpinner";
+import { PlanetSpinner } from "../assets/PlanetSpinner";
 import { isLoading } from "../utils/selectors";
 import { useSelector } from "react-redux";
 
