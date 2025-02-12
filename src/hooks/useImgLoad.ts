@@ -4,7 +4,9 @@ export function useImgLoad(imgUrl?: string): [url: string | null, isLoaded: bool
     const [url, setUrl] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState(true);
     useEffect(() => {
-        if (!imgUrl) return;
+        if (!imgUrl) 
+            return;
+
         fetch(imgUrl)
         .then(response => response.blob())
         .then((image) => {
@@ -12,7 +14,7 @@ export function useImgLoad(imgUrl?: string): [url: string | null, isLoaded: bool
         })
         .catch(() => {})
         .finally( () => { setIsLoading(false) } )
-    }, [])
-    if (!imgUrl) return [null, false];
+    }, [imgUrl])
+
     return [url, isLoading];
 }

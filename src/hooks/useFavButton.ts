@@ -12,9 +12,8 @@ export function useFavButton(character?: CharacterSchema): [checked: boolean | n
     const location = useLocation();
     const [checked, setChecked] = 
         useState<boolean | null>(favorite.ids?.includes(character?.id) ?? null);
-
     useEffect(() => {
-        if (favorite.ids === null) return;
+        if (!character || favorite.ids === null) return;
         if (location.pathname === PATHS.CHARACTER && 
             favorite.ids?.includes(character?.id)) {
                 setChecked(!favorite.idsForRemoval?.includes(character?.id));
@@ -22,7 +21,7 @@ export function useFavButton(character?: CharacterSchema): [checked: boolean | n
         if (location.pathname !== PATHS.FAVORITES)
             setChecked(favorite.ids?.includes(character?.id));
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [favorite])
+    }, [favorite, character])
     
     function handleFavChange() {
         if (location.pathname === PATHS.FAVORITES || (

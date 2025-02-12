@@ -14,7 +14,7 @@ type CharacterCardProps = {
 export function CharacterCard({character}: CharacterCardProps) {
     const [url, isLoading] = useImgLoad(character.image);
     const authState = useSelector(isAuth);
-    const path = PATHS.CHARACTER;
+    const path = PATHS.CHARACTER + `/${(character.id || '')}`;
     return(
         <>{ authState ? (
             <CardFav
