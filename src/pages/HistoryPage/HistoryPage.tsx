@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import "./HistoryPage.css";
-import { history } from "../../utils/selectors";
+import { authUserHistory } from "../../utils/selectors";
 import { clearHistory } from "../../store/searchSlice";
 import { AppDispatch } from "../../store/store";
 import { fetchFilteredCharactersThunk } from "../../store/searchThunks";
@@ -9,7 +9,7 @@ import { PATHS } from "../../utils/constants";
 
 
 export const HistoryPage = () => {
-  const historyList = useSelector(history);
+  const historyList = useSelector(authUserHistory);
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate()
 

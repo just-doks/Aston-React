@@ -1,17 +1,12 @@
-import { getRandomId } from "../utils/randomId";
-import { CharacterResponse } from "@/http/characterTypes";
+import { CharacterResponse, HistoryItemType } from "@/http/characterTypes";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { TypeFilters } from "../http/characterTypes";
-import {
-  loadSearchConfigFromLocalStorage,
-  removeItemFromLocalStorage,
-  saveSearchConfigToLocalStorage,
-} from "../utils/localStorageFunc";
-import { getCurrentDate } from "../utils/getDate";
+import { loadSearchConfigFromLocalStorage, removeItemFromLocalStorage } from "../utils/localStorageFunc";
+import { configureHistoryThunk } from "./searchThunks";
 
 export type SearchState = {
   searchConfig: TypeFilters;
-  history: TypeFilters[];
+  history: HistoryItemType[];
   searchResults: CharacterResponse;
   searchError: string;
   isTelegramShareEnabled: boolean;
@@ -42,14 +37,6 @@ export const { reducer: searchReducer, actions: searchActions } = createSlice({
     configureSearch(state, action: PayloadAction<TypeFilters>) {
       state.searchConfig = action.payload;
     },
-    configureHistory(state, action: PayloadAction<TypeFilters>) {
-      state.history.unshift({
-        id: getRandomId(5),
-        ...action.payload,
-        date: getCurrentDate(),
-      });
-      saveSearchConfigToLocalStorage(state.history);
-    },
     clearHistory(state) {
       state.history.length = 0;
       removeItemFromLocalStorage("searchHistory");
@@ -70,11 +57,15 @@ export const { reducer: searchReducer, actions: searchActions } = createSlice({
       state.isTelegramShareEnabled = action.payload.isTelegramShareEnabled;
     },
   },
+  extraReducers: (builder) => {
+    builder.addCase(configureHistoryThunk.fulfilled, (state, action) => {
+      state.history.unshift(action.payload)
+    })
+  }
 });
 
 export const {
   configureSearch,
-  configureHistory,
   setSearchResults,
   clearHistory,
   clearSearchConfig,

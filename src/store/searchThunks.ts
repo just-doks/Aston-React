@@ -6,12 +6,15 @@ import {
   fetchFilteredCharacters,
 } from "../http/characterAPI";
 import {
-  configureHistory,
   configureSearch,
   setSearchError,
   setSearchResults,
 } from "./searchSlice";
-import { TypeFilters } from "../http/characterTypes";
+import { TypeFilters, HistoryItemType } from "../http/characterTypes";
+import { getRandomId } from "../utils/randomId";
+import { getCurrentDate } from "../utils/getDate";
+import { saveSearchConfigToLocalStorage } from "../utils/localStorageFunc";
+import { setIsLoading } from "./loaderSlice";
 
 type FilteredCharactersArgs = {
   data: TypeFilters;
@@ -28,6 +31,7 @@ export const fetchIfEmptyThunk = createAsyncThunk<
 
   if (!characters.length && !searchError && history.length) {
     try {
+      dispatch(setIsLoading(true))
       const data = await fetchFilteredCharacters(history[0]);
       dispatch(setSearchResults(data));
     } catch (err) {
@@ -41,6 +45,8 @@ export const fetchIfEmptyThunk = createAsyncThunk<
       } else {
         dispatch(setSearchError(err.code));
       }
+    } finally {
+      dispatch(setIsLoading(false))
     }
   }
 });
@@ -58,39 +64,75 @@ export const fetchCharacterPageThunk = createAsyncThunk<
 
   if (url) {
     try {
+      dispatch(setIsLoading(true))
       const data = await fetchCharacterPage(url);
       dispatch(setSearchResults(data));
     } catch (err) {
       dispatch(setSearchError(err.code));
+    } finally {
+      dispatch(setIsLoading(false))
     }
   }
 });
 
 export const fetchFilteredCharactersThunk = createAsyncThunk<
   void,
-  FilteredCharactersArgs
+  FilteredCharactersArgs,
+  { state: RootState }
 >(
   "search/fetchFilteredCharacters",
-  async ({ data, isWriteToHistory }, { dispatch }) => {
+  async ({ data, isWriteToHistory }, { getState, dispatch }) => {
+    const { isAuth } = getState().auth
+    const writeCondition = isWriteToHistory && isAuth
     try {
+      dispatch(setIsLoading(true))
       dispatch(setSearchError(""));
       dispatch(configureSearch(data));
       const searchResults = await fetchFilteredCharacters(data);
       dispatch(setSearchResults(searchResults));
 
-      if (isWriteToHistory && data.name) {
-        dispatch(configureHistory(data));
+      if (writeCondition && data.name) {
+        dispatch(configureHistoryThunk(data));
       }
     } catch (error) {
       dispatch(setSearchError(error.code));
-      if (isWriteToHistory) {
+      if (writeCondition && isAuth) {
         dispatch(
-          configureHistory({
+          configureHistoryThunk({
             ...data,
             error: "Error. Something went terribly wrong.",
           })
         );
       }
+    } finally {
+      dispatch(setIsLoading(false))
     }
   }
 );
+
+export const configureHistoryThunk = createAsyncThunk<
+  HistoryItemType,
+  TypeFilters,
+  { state: RootState,  }
+>("search/configureHistory", async (searchConfig, { getState, rejectWithValue }) => {
+  const state = getState()
+
+  if(!state.auth.isAuth) {
+    return rejectWithValue("User is not authorized")
+  }
+
+  const username = state.auth.loginUser.username
+
+  const historyItem: HistoryItemType = {
+    id: getRandomId(5),
+    ...searchConfig,
+    date: getCurrentDate(),
+    username
+  }
+
+  const updateHistory = [historyItem, ...state.search.history]
+
+  saveSearchConfigToLocalStorage(updateHistory)
+
+  return historyItem
+});

@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createEntityAdapter, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import {
   type User,
   loadUsersFromLocalStorage,
@@ -9,35 +9,34 @@ import {
 } from "../utils/localStorageFunc";
 
 const storedUser = loadLoginUser();
+const initialUsers = loadUsersFromLocalStorage()
 
-type AuthState = {
-  isAuth: boolean;
-  users: User[];
-  loginUser: User | null;
-  error: string;
-};
+export const usersAdapter = createEntityAdapter({
+  selectId: (user: User) => user.username
+})
 
-const initialState: AuthState = {
+const initialState = usersAdapter.getInitialState ({
+  ids: initialUsers.map(user => user.username),
+  entities: Object.fromEntries(initialUsers.map(user => [user.username, user])),
   isAuth: !!storedUser,
-  users: loadUsersFromLocalStorage(),
   loginUser: storedUser,
   error: "",
-};
+});
 
 export const {reducer: authReducer, actions: authActions} = createSlice({
   name: "auth",
   initialState,
   reducers: {
     registerUser: (state, action: PayloadAction<User>) => {
-      const existingUser = state.users.find(
+      const existingUser = Object.values(state.entities).find(
         (user) => user.username === action.payload.username
       );
 
       if (existingUser) {
         state.error = "User with the same name already exists";
       } else {
-        state.users.push(action.payload);
-        saveUsersToLocalStorage(state.users);
+        usersAdapter.addOne(state, action.payload)
+        saveUsersToLocalStorage(Object.values(state.entities));
 
         state.loginUser = action.payload;
         saveLoginUserToLocalStorage(action.payload);
@@ -46,7 +45,7 @@ export const {reducer: authReducer, actions: authActions} = createSlice({
       }
     },
     loginUser: (state, action: PayloadAction<User>) => {
-      const foundUser = state.users.find(
+      const foundUser = Object.values(state.entities).find(
         (user) =>
           user.username === action.payload.username
       );
