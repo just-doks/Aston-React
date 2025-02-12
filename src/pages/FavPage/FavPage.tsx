@@ -4,7 +4,7 @@ import { removeFavoritesFromQueue } from '#store/favoriteSlice';
 import { useFuncOnUpdate } from '#hooks/useFuncOnUpdate';
 import './FavPage.css';
 
-const CharacterTable = lazy(() => import('#containers/CharacterTable').then(module => ({default: module.CharacterTable})));
+const FavoritesTable = lazy(() => import('#containers/FavoritesTable').then(module => ({default: module.FavoritesTable})));
 
 export function FavPage() {
     const dispatch = useDispatch();
@@ -17,7 +17,7 @@ export function FavPage() {
         <div className="container fav-page-wrapper" ref={favPageRef}>
             <h1 className='fav-page-title'>The collection of favorite characters</h1>
             <Suspense fallback={<h1 className="fav-page-title">LOADING...</h1>}>
-                <CharacterTable />
+                <FavoritesTable />
             </Suspense>
         </div>
     )

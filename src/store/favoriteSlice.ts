@@ -7,14 +7,14 @@ import { loadFavorites, saveFavorites } from "src/utils/localStorageFunc";
 
 export type favoriteState = {
     userLogin: string | null,
-    ids: number[],
-    idsForRemoval: number[]
+    ids: number[] | null,
+    idsForRemoval: number[] | null
 }
 
 const initialState: favoriteState = {
     userLogin: null,
-    ids: [] as number[],
-    idsForRemoval: [] as number[]
+    ids: null,
+    idsForRemoval: null
 }
 
 const favoriteSlice = createSlice({
@@ -44,6 +44,7 @@ const favoriteSlice = createSlice({
         initFavorites(state, action: PayloadAction<string>) {
             state.userLogin = action.payload;
             state.ids = loadFavorites(state.userLogin);
+            state.idsForRemoval = [] as number[];
         }
     },
     extraReducers: (builder) => {

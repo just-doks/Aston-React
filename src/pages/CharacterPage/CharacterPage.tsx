@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import { useLocation, Navigate } from 'react-router';
 import { useSelector } from "react-redux";
 import './CharacterPage.css';
@@ -23,21 +22,21 @@ export function CharacterPage() {
         dispatch(removeFavoritesFromQueue());
     }
     const charPageRef = useFuncOnUpdate<HTMLDivElement>(removeFavorites);
-    const [url, isLoading] = useImgLoad(character.image);
+    const [url, isLoading] = useImgLoad(character?.image);
 
     return(
         <> { character
             ?
             <div className='c-page-grid' ref={charPageRef}>
                 <div className='c-page-left-col'>
-                    { isLoading ? (
-                        <div className='c-page-spinner-wrapper'>
+                    <div className='c-page-image-container'>
+                        { isLoading ? (
                             <PlanetSpinner className='c-page-spinner'/>
-                        </div>
-                    ) : (
-                        <img className='c-page-image' src={url}/>
-                    )}                 
-                    { isUserAuth && (
+                        ) : (
+                            <img className='c-page-image' src={url}/>
+                        )}
+                    </div>             
+                    { isUserAuth && checked !== null && (
                         <FavoriteButton 
                             className='c-page-fav' 
                             checked={checked}

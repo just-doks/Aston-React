@@ -10,7 +10,7 @@ import type { favoriteState } from 'src/store/favoriteSlice';
 import { CharacterCard } from '#containers/CharacterCard';
 import { CharacterTable as CharacterTableView } from '#presentationals/CharacterTable';
 
-export function CharacterTable() {
+export function FavoritesTable() {
     const favorite: favoriteState = useSelector(selectFavorite);
     const dispatch = useDispatch();
 
@@ -27,7 +27,6 @@ export function CharacterTable() {
     useEffect(() => {
         
         if (!favorite.ids.length) return;
-        console.log("1")    
         const _pages = Math.ceil(favorite.ids.length / 20);
         if (pages !== _pages) {
             setPages(_pages);
@@ -40,7 +39,6 @@ export function CharacterTable() {
 
     useEffect(() => {
         if (!currentPage) return;
-        console.log("2")
         const start = (currentPage - 1) * 20;
         const end = (currentPage -  1) * 20 + 20;
         setIds(favorite.ids.slice(start, end));
@@ -49,7 +47,6 @@ export function CharacterTable() {
     useEffect(() => {
         
         if (!ids.length) return;
-        console.log("3")
         fetchMultipleCharacters(ids)
         .then(data => {
             setCharacters(data);

@@ -9,22 +9,24 @@
     grid-column: 2 / 3;
     padding: 5px;
 }
-.c-page-image {
-    aspect-ratio: 1 / 1;
-    border-radius: 20px;
-    width: 100%;
-    border: solid;
-    border-color: hsl(218, 50%, 20%);
-}
-.c-page-spinner-wrapper {
+.c-page-image-container {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: repeat(4, 1fr);
     aspect-ratio: 1 / 1;
-    background-color: rgb(43, 74, 128);
+    width: 100%;
+    height: auto;
     border: solid;
     border-color: hsl(218, 50%, 20%);
     border-radius: 20px;
+    background-color: rgb(43, 74, 128);
+    overflow: hidden;
+}
+.c-page-image {
+    width: 100%;
+    height: auto;
+    grid-column: 1 / 5;
+    grid-row: 1 / 5;
 }
 .c-page-spinner {
     grid-column: 2 / 4;

@@ -10,7 +10,8 @@
       "#pages/*": ["./src/pages/*"],
       "#store/*": ["./src/store/*"],
       "#middlewares/*": ["./src/middlewares/*"],
-      "#utils/*": ["./src/utils/*"]
+      "#utils/*": ["./src/utils/*"],
+      "#assets/*": ["src/assets/*"]
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.5.0",
