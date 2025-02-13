@@ -2,9 +2,10 @@ import { FC } from "react";
 import { HomePage } from "./pages/HomePage/HomePage";
 import { PATHS } from "./utils/constants";
 import { SearchPage } from "./pages/SearchPage/SearchPage";
-import { CharacterPage } from "./pages/CharacterPage/";
+import { CharacterPage } from "./pages/CharacterPage";
 import { SignInPage, SignUpPage } from "./pages/AuthPages/AuthPages";
 import { HistoryPage } from "./pages/HistoryPage/HistoryPage";
+import { FavPage } from "#pages/FavPage";
 
 export type RouteType = {
   path: string,
@@ -12,20 +13,36 @@ export type RouteType = {
 };
 
 export const publicRoutes: RouteType[] = [
-  {
-    path: PATHS.HOME,
-    Component: HomePage,
-  },
-  { path: PATHS.SIGNUP, Component: SignUpPage },
-  { path: PATHS.SIGNIN, Component: SignInPage },
-  { path: PATHS.SEARCH, Component: SearchPage },
-  {
-    path: PATHS.CHARACTER,
-    Component: CharacterPage
-  }
+    {
+        path: PATHS.HOME,
+        Component: HomePage,
+    },
+    { 
+        path: PATHS.SIGNUP, 
+        Component: SignUpPage 
+    },
+    { 
+        path: PATHS.SIGNIN, 
+        Component: SignInPage 
+    },
+    { 
+        path: PATHS.SEARCH, 
+        Component: SearchPage 
+    },
+    {
+        path: PATHS.CHARACTER,
+        Component: CharacterPage
+    },
+    {
+        path: PATHS.FAVORITES,
+        Component: FavPage
+    }
 ];
 
 export const privateRoutes: RouteType[] = [
-  { path: PATHS.HISTORY, Component: HistoryPage },
+    { 
+        path: PATHS.HISTORY, 
+        Component: HistoryPage 
+    }
 ];
 

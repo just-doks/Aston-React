@@ -3,7 +3,7 @@ import "./SearchPage.css";
 import { SearchBar } from "src/components/SearchBar";
 import { SearchErrorBoundary } from "../../components/ErrorBoundary/SearchErrorBoundary";
 import { useClearOnUnmount } from "../../hooks/useClearOnUnmount";
-import { PlanetSpinner } from "../../assets/PlanetSpinner";
+import { PlanetSpinner } from "#presentationals/PlanetSpinner";
 const LazySlider = lazy(() => import("../../components/CharacterList").then(res => ({ default: res.CharacterSlider })));
 
 
