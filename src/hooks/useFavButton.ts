@@ -14,7 +14,7 @@ export function useFavButton(character?: CharacterSchema): [checked: boolean | n
         useState<boolean | null>(favorite.ids?.includes(character?.id) ?? null);
     useEffect(() => {
         if (!character || favorite.ids === null) return;
-        if (location.pathname === PATHS.CHARACTER && 
+        if (location.pathname.includes(PATHS.CHARACTER) &&
             favorite.ids?.includes(character?.id)) {
                 setChecked(!favorite.idsForRemoval?.includes(character?.id));
         } else
@@ -24,8 +24,9 @@ export function useFavButton(character?: CharacterSchema): [checked: boolean | n
     }, [favorite, character])
     
     function handleFavChange() {
+        console.log(location.pathname.includes(PATHS.CHARACTER))
         if (location.pathname === PATHS.FAVORITES || (
-                location.pathname === PATHS.CHARACTER &&
+                location.pathname.includes(PATHS.CHARACTER) &&
                 favorite.ids?.includes(character?.id) )
         ) {
             if (checked)

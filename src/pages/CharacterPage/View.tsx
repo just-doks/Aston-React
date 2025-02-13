@@ -10,7 +10,6 @@ import { getTelegramLink } from '#utils/getTelegramLink';
 type ViewType = {
     character: CharacterSchema, 
     loading: boolean, 
-    ref: React.Ref<HTMLDivElement>, 
     isImgLoading: boolean, 
     imgUrl: string | null, 
     isUserAuth: boolean, 
@@ -19,13 +18,13 @@ type ViewType = {
     isTelegramEnabled: boolean
 }
 
-export function View({character, loading, ref, isImgLoading, imgUrl, 
+export function View({character, loading, isImgLoading, imgUrl, 
     isUserAuth, isFavorite, onFavoriteChange, isTelegramEnabled
 }: ViewType) {
 
     return(
         character && !loading && (
-            <div className='c-page-grid' ref={ref}>
+            <div className='c-page-grid'>
                 <div className='c-page-left-col'>
                     <div className='c-page-image-container'>
                         { isImgLoading ? (
