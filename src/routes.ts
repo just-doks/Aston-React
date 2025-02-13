@@ -17,6 +17,10 @@ export const publicRoutes: RouteType[] = [
         path: PATHS.HOME,
         Component: HomePage,
     },
+    {
+        path: PATHS.SEARCH, 
+        Component: SearchPage 
+    },
     { 
         path: PATHS.SIGNUP, 
         Component: SignUpPage 
@@ -25,17 +29,9 @@ export const publicRoutes: RouteType[] = [
         path: PATHS.SIGNIN, 
         Component: SignInPage 
     },
-    { 
-        path: PATHS.SEARCH, 
-        Component: SearchPage 
-    },
     {
-        path: PATHS.CHARACTER,
+        path: PATHS.CHARACTER + '/:id',
         Component: CharacterPage
-    },
-    {
-        path: PATHS.FAVORITES,
-        Component: FavPage
     }
 ];
 
@@ -43,6 +39,9 @@ export const privateRoutes: RouteType[] = [
     { 
         path: PATHS.HISTORY, 
         Component: HistoryPage 
+    },
+    {
+        path: PATHS.FAVORITES,
+        Component: FavPage
     }
 ];
-

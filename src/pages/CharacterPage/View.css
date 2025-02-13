@@ -1,0 +1,47 @@
+
+.c-page-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    margin-top: 20px;
+}
+
+.c-page-left-col {
+    grid-column: 2 / 3;
+    padding: 5px;
+}
+.c-page-image-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    aspect-ratio: 1 / 1;
+    width: 100%;
+    height: auto;
+    border: solid;
+    border-color: hsl(218, 50%, 20%);
+    border-radius: 20px;
+    background-color: rgb(43, 74, 128);
+    overflow: hidden;
+}
+.c-page-image {
+    width: 100%;
+    height: auto;
+    grid-column: 1 / 5;
+    grid-row: 1 / 5;
+}
+.c-page-spinner {
+    grid-column: 2 / 4;
+    grid-row: 2 / 4;
+}
+.c-page-fav {
+    display: block;
+    margin-top: 8px;
+}
+.c-page-tg {
+    margin-top: 10px;
+}
+
+
+.c-page-right-col {
+    grid-column: 3 / 5;
+    padding: 5px;
+}

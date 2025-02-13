@@ -1,0 +1,46 @@
+
+.share-button {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 10%;
+
+    width: 100%;
+    height: auto;
+    background-color: rgb(38, 164, 228);
+    border-radius: 12px;
+    border: solid;
+    border-width: 3px;
+    border-color: white;
+    color: white;
+    fill: white;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.share-button:hover {
+    background-color: hsl(200, 78%, 57%);
+}
+
+.share-button:active {
+    background-color: hsl(200, 78%, 47%);
+}
+
+.share-button > * {
+    cursor: pointer;
+    user-select: none;
+}
+
+.share-button > label {
+    margin-left: 25%;
+    font-size: max(16px, min(2vw, 24px));
+    font-weight: 600;
+}
+
+.share-button > svg {
+    width: 20%;
+    height: auto;
+    aspect-ratio: 1 / 1;
+    margin-right: 1%;
+}

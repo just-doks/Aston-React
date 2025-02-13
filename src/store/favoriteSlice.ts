@@ -50,7 +50,9 @@ const favoriteSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(logout, (state) => {
-                state = initialState;
+                state.ids = null;
+                state.userLogin = null;
+                state.idsForRemoval = null;
             })
     }
 });

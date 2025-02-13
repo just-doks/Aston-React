@@ -1,63 +1,22 @@
-import { useLocation, Navigate } from 'react-router';
-import { useSelector } from "react-redux";
+import { Suspense, lazy } from "react";
+import { useParams, Navigate } from "react-router";
 import './CharacterPage.css';
-import { type CharacterSchema } from 'src/http/characterTypes';
-import { PATHS } from 'src/utils/constants';
-import { FavoriteButton } from '#presentationals/FavoriteButton';
-import { useFavButton } from 'src/hooks/useFavButton';
-import { useDispatch } from 'react-redux';
-import { useFuncOnUpdate } from 'src/hooks/useFuncOnUpdate';
-import { removeFavoritesFromQueue } from 'src/store/favoriteSlice';
-import { isAuth } from "#utils/selectors";
-import { useImgLoad } from '#hooks/useImgLoad';
-import { PlanetSpinner } from '#presentationals/PlanetSpinner';
+import { PATHS } from "#utils/constants.ts";
+
+const Container = lazy(() => import('./Container.tsx').then(module => ({default: module.Container})));
 
 export function CharacterPage() {
-    const location = useLocation();
-    const dispatch = useDispatch();
-    const { character }: {character?: CharacterSchema} = location.state ?? {};
-    const isUserAuth = useSelector(isAuth);
-    const [checked, handleFavChange] = useFavButton(character);
-    function removeFavorites() {
-        dispatch(removeFavoritesFromQueue());
-    }
-    const charPageRef = useFuncOnUpdate<HTMLDivElement>(removeFavorites);
-    const [url, isLoading] = useImgLoad(character?.image);
-
+    const id = parseInt(useParams()?.id);
     return(
-        <> { character
-            ?
-            <div className='c-page-grid' ref={charPageRef}>
-                <div className='c-page-left-col'>
-                    <div className='c-page-image-container'>
-                        { isLoading ? (
-                            <PlanetSpinner className='c-page-spinner'/>
-                        ) : (
-                            <img className='c-page-image' src={url}/>
-                        )}
-                    </div>             
-                    { isUserAuth && checked !== null && (
-                        <FavoriteButton 
-                            className='c-page-fav' 
-                            checked={checked}
-                            onChange={handleFavChange}
-                        />
-                    )}
-                </div>
-                <div className='c-page-right-col'>
-                    <ul className='c-page-info'>
-                        <li><b>Name:</b> {character.name}</li>
-                        <li><b>Status:</b> {character.status}</li>
-                        <li><b>Species:</b> {character.species}</li>
-                        <li><b>Type:</b> {character.type || '-'}</li>
-                        <li><b>Gender:</b> {character.gender}</li>
-                    </ul>
-                </div>
-                    
-               
-            </div>
-            :
+        ((isNaN(id)) ? (
             <Navigate to={PATHS.HOME}/>
-        } </>
+        ) : (
+            <div className="container">
+                <Suspense fallback={<div className='c-page-warning-badge'><h1>LOADING...</h1></div>}>
+                    <Container />
+                </Suspense>
+            </div>
+        )
+        )
     )
 }

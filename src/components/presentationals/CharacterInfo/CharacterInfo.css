@@ -1,0 +1,26 @@
+
+
+.character-info {
+    background-color: rgba(43, 74, 128, 0.8);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    width: 100%;
+    color: white;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    border-radius: 20px;
+    border: solid;
+    border-color: hsl(218, 50%, 20%);
+}
+.character-info > li {
+    padding: 4%;
+}
+.character-info > li:not(:first-child) {
+    border-top: solid;
+    border-top-color: hsl(218, 50%, 20%);
+}
+.character-info > li > b {
+    margin-right: 6px;
+    text-decoration-line: underline;
+}

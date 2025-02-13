@@ -26,7 +26,7 @@ export function FavoritesTable() {
 
     useEffect(() => {
         
-        if (!favorite.ids.length) return;
+        if (!favorite.ids?.length) return;
         const _pages = Math.ceil(favorite.ids.length / 20);
         if (pages !== _pages) {
             setPages(_pages);
@@ -46,7 +46,7 @@ export function FavoritesTable() {
 
     useEffect(() => {
         
-        if (!ids.length) return;
+        if (!ids?.length) return;
         fetchMultipleCharacters(ids)
         .then(data => {
             setCharacters(data);

@@ -6,7 +6,7 @@ import { loginUser } from "src/store/authSlice";
 export const favMiddleware: Middleware<{}, RootState> = api => next => action => {
     if (removeFavoritesFromQueue.match(action)) {
         const { favorite } = api.getState();
-        if (!favorite.idsForRemoval.length) {
+        if (!favorite.idsForRemoval?.length) {
             return;
         }
     }

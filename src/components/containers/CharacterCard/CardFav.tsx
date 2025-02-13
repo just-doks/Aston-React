@@ -8,11 +8,14 @@ type CardFavProps = {
     name: string,
     imgUrl: string,
     navigateTo: string,
-    isLoading?: boolean
+    isLoading?: boolean,
+    telegramEnabled?: boolean,
+    telegramHref?: string
 }
 
 export function CardFav({
-    character, name, imgUrl, navigateTo, isLoading
+    character, name, imgUrl, navigateTo, isLoading,
+    telegramEnabled, telegramHref
 }: CardFavProps) {
     const [checked, handleFavChange] = useFavButton(character);
     return (
@@ -24,6 +27,8 @@ export function CardFav({
             isLoading={isLoading}
             isFavorite={checked}
             onFavoriteChange={handleFavChange}
+            telegramEnabled={telegramEnabled}
+            telegramHref={telegramHref}
         />
     )
 }

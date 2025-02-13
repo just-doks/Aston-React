@@ -1,0 +1,21 @@
+
+.tg-button {
+    cursor: pointer;
+}
+
+.tg-button > svg {
+    width: 100%;
+    height: auto;
+}
+
+.tg-button > svg > g > polygon {
+    fill: hsl(200, 78%, 52%);
+}
+
+.tg-button:hover > svg > g > polygon {
+    fill: hsl(200, 78%, 57%);
+}
+
+.tg-button:active > svg > g > polygon {
+    fill: hsl(200, 78%, 47%);
+}
