@@ -3,7 +3,7 @@ import { useParams, Navigate } from "react-router";
 import './CharacterPage.css';
 import { PATHS } from "#utils/constants.ts";
 
-const CharacterData = lazy(() => import('./CharacterData.tsx').then(module => ({default: module.CharacterData})));
+const Container = lazy(() => import('./Container.tsx').then(module => ({default: module.Container})));
 
 export function CharacterPage() {
     const id = parseInt(useParams()?.id);
@@ -13,7 +13,7 @@ export function CharacterPage() {
         ) : (
             <div className="container">
                 <Suspense fallback={<div className='c-page-warning-badge'><h1>LOADING...</h1></div>}>
-                    <CharacterData />
+                    <Container />
                 </Suspense>
             </div>
         )

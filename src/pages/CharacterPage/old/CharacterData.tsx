@@ -12,6 +12,7 @@ import { useImgLoad } from '#hooks/useImgLoad';
 import { PlanetSpinner } from '#presentationals/PlanetSpinner';
 import { fetchCharacter } from '#http/characterAPI';
 import { ShareButton } from '#presentationals/ShareButton';
+import { CharacterInfo } from '#presentationals/CharacterInfo';
 import { getTelegramLink } from '#utils/getTelegramLink';
 import { TelegramContext } from 'src/App';
 
@@ -69,13 +70,14 @@ export function CharacterData() {
                     )}
                 </div>
                 <div className='c-page-right-col'>
-                    <ul className='c-page-info'>
+                    <CharacterInfo character={character}/>
+                    {/* <ul className='c-page-info'>
                         <li><b>Name:</b> {character.name}</li>
                         <li><b>Status:</b> {character.status}</li>
                         <li><b>Species:</b> {character.species}</li>
                         <li><b>Type:</b> {character.type || '-'}</li>
                         <li><b>Gender:</b> {character.gender}</li>
-                    </ul>
+                    </ul> */}
                 </div>
             </div>
         ) || ( !character && !loading && (
