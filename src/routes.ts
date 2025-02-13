@@ -1,11 +1,11 @@
 import { FC } from "react";
-import { HomePage } from "./pages/HomePage";
+import { HomePage } from "./pages/HomePage/HomePage";
 import { PATHS } from "./utils/constants";
-import { SearchPage } from "./pages/SearchPage";
+import { SearchPage } from "./pages/SearchPage/SearchPage";
 import { CharacterPage } from "./pages/CharacterPage";
 import { SignInPage, SignUpPage } from "./pages/AuthPages/AuthPages";
 import { HistoryPage } from "./pages/HistoryPage/HistoryPage";
-import { FavPage } from "./pages/FavPage";
+import { FavPage } from "#pages/FavPage";
 
 export type RouteType = {
   path: string,
@@ -17,7 +17,7 @@ export const publicRoutes: RouteType[] = [
         path: PATHS.HOME,
         Component: HomePage,
     },
-    { 
+    {
         path: PATHS.SEARCH, 
         Component: SearchPage 
     },
@@ -45,4 +45,3 @@ export const privateRoutes: RouteType[] = [
         Component: FavPage
     }
 ];
-

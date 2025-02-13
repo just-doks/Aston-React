@@ -9,5 +9,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 16px;
+}
+.suspense-spinner{
+    width: 300px;
+    margin-top: 50px;
 }

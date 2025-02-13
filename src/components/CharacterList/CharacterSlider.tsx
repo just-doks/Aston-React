@@ -1,47 +1,62 @@
 import "./CharacterSlider.css";
-import { CharacterCard } from "./CharacterCard";
+import { CharacterCard } from "#containers/CharacterCard";
 import { SvgButton } from "../../assets";
-import { useState } from "react";
+import { useLayoutEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { searchError, searchResults } from "../../utils/selectors";
+import { AppDispatch } from "../../store/store";
+import { fetchCharacterPageThunk, fetchIfEmptyThunk } from "../../store/searchThunks";
 
-type CharacterSliderProps = {
-  TEST: {
-    id: number;
-    name: string;
-    image: string;
-  }[][];
-};
+export const CharacterSlider = () => {
+  const dispatch = useDispatch<AppDispatch>();
+  const response = useSelector(searchResults);
+  const error = useSelector(searchError)
+  const characters = response?.results || [];
+  const nextPage = response?.info?.next
+  const prevPage = response?.info?.prev
 
-export const CharacterSlider = ({TEST}: CharacterSliderProps) => {
-  const [pageNumber, setPageNumber] = useState(0);
+  useLayoutEffect(() => {
+    if (error) {
+      throw new Error(error);
+    }
+    dispatch(fetchIfEmptyThunk())
+  }, [error]);
 
   const handlePreviousPage = () => {
-    setPageNumber(pageNumber - 1);
+    dispatch(fetchCharacterPageThunk("prevPage"))
   };
+  
   const handleNextPage = () => {
-    setPageNumber(pageNumber + 1);
+    dispatch(fetchCharacterPageThunk("nextPage"))
   };
-  return ( <div className="character-slider">
-    <button
-      className="character-slider_button-back"
-      onClick={handlePreviousPage}
-    >
-      <SvgButton />
-    </button>
-    <ul className="character-slider_items">
-      {TEST[pageNumber].map((character) => (
-        <CharacterCard
-          id={character.id}
-          name={character.name}
-          image={character.image}
-        />
-      ))}
-    </ul>
-    <button
-      className="character-slider_button-forward"
-      onClick={handleNextPage}
-    >
-      <SvgButton />
-    </button>
-  </div>
-  )
+
+  return (
+    <div className="character-slider">
+      <button
+        className={
+          prevPage
+            ? "character-slider_button-back"
+            : "character-slider_button-back --inactive"
+        }
+        onClick={handlePreviousPage}
+      >
+        <SvgButton inactive={prevPage ? false : true} />
+      </button>
+      <ul className="character-slider_items">
+        {characters.map((character) => (
+          <CharacterCard character={character} key={character.id} />
+        ))}
+      </ul>
+      <button
+        className={
+          nextPage
+            ? "character-slider_button-forward"
+            : "character-slider_button-forward --inactive"
+        }
+        onClick={handleNextPage}
+      >
+        <SvgButton inactive={nextPage ? false : true} />
+      </button>
+    </div>
+  );
 };

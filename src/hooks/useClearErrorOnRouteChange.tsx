@@ -3,7 +3,7 @@ import { useLocation } from "react-router"
 import { removeError } from "../store/authSlice"
 import { useEffect } from "react"
 
-export const useErrorClearOnRouteCange = () => {
+export const useErrorClearOnRouteChange = () => {
     const dispatch = useDispatch()
     const location = useLocation()
 
