@@ -1,9 +1,6 @@
 
 .planet-spinner {
     aspect-ratio: 1 / 1;
-    width: 100%;
-    height: auto;
-    /* height: 100%; */
     animation: planet-spinner-loading 1s linear infinite;
 }
 

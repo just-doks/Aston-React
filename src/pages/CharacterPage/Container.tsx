@@ -1,7 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
 import { useLocation, useParams } from 'react-router';
 import { useDispatch, useSelector } from "react-redux";
-import './CharacterData.css';
 import { type CharacterSchema } from 'src/http/characterTypes';
 import { useFavButton } from 'src/hooks/useFavButton';
 import { useFuncOnUpdate } from 'src/hooks/useFuncOnUpdate';
