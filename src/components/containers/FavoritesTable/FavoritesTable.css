@@ -1,0 +1,14 @@
+
+
+.fav-table-spinner {
+    width: 15%;
+    margin-top: 15%;
+}
+
+.fav-table-warning {
+    background-color: rgb(43, 74, 128);
+    padding: 16px;
+    border-radius: 30px;
+    color: #fff;
+    border: 1px solid black;
+}

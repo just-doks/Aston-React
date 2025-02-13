@@ -9,6 +9,7 @@ import {
 import type { favoriteState } from 'src/store/favoriteSlice';
 import { CharacterCard } from '#containers/CharacterCard';
 import { CharacterTable as CharacterTableView } from '#presentationals/CharacterTable';
+import './FavoritesTable.css';
 
 export function FavoritesTable() {
     const favorite: favoriteState = useSelector(selectFavorite);
@@ -23,6 +24,8 @@ export function FavoritesTable() {
 
     const [prev, setPrev] = useState<boolean>(false);
     const [next, setNext] = useState<boolean>(false);
+
+    const [loading, setLoading] = useState(true)
 
     useEffect(() => {
         
@@ -42,17 +45,19 @@ export function FavoritesTable() {
         const start = (currentPage - 1) * 20;
         const end = (currentPage -  1) * 20 + 20;
         setIds(favorite.ids.slice(start, end));
+        setLoading(true);
     }, [currentPage, pages])
 
     useEffect(() => {
-        
         if (!ids?.length) return;
+
         fetchMultipleCharacters(ids)
         .then(data => {
             setCharacters(data);
 
             setPrev(currentPage > 1);
             setNext(currentPage < pages);
+            setLoading(false);
         })
     }, [ids])
 
@@ -66,15 +71,19 @@ export function FavoritesTable() {
     }
 
     return(
-        <CharacterTableView
-            prev={prev}
-            onPrevClick={handlePrevClick}
-            next={next}
-            onNextClick={handleNextClick}
-        >
-            { characters.map((c) => (
-                <CharacterCard key={c.id} character={c}/>
-            ))}
-        </CharacterTableView>
+        loading ? (
+            <h1 className="fav-table-warning">LOADING...</h1>
+        ) : (
+            <CharacterTableView
+                prev={prev}
+                onPrevClick={handlePrevClick}
+                next={next}
+                onNextClick={handleNextClick}
+            >
+                { characters.map((c) => (
+                    <CharacterCard key={c.id} character={c}/>
+                ))}
+            </CharacterTableView>
+        )
     )
 }
