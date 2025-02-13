@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useLocation, useParams } from 'react-router';
 import { useDispatch, useSelector } from "react-redux";
 import './CharacterData.css';
@@ -11,6 +11,9 @@ import { isAuth } from "#utils/selectors";
 import { useImgLoad } from '#hooks/useImgLoad';
 import { PlanetSpinner } from '#presentationals/PlanetSpinner';
 import { fetchCharacter } from '#http/characterAPI';
+import { ShareButton } from '#presentationals/ShareButton';
+import { getTelegramLink } from '#utils/getTelegramLink';
+import { TelegramContext } from 'src/App';
 
 export function CharacterData() {
     const location = useLocation();
@@ -41,6 +44,8 @@ export function CharacterData() {
 
     const [url, isImgLoading] = useImgLoad(character?.image);
 
+    const { isTelegramShareEnabled } = useContext(TelegramContext);
+
     return(
         character && !loading && (
             <div className='c-page-grid' ref={charPageRef}>
@@ -58,6 +63,9 @@ export function CharacterData() {
                             checked={checked}
                             onChange={handleFavChange}
                         />
+                    )}
+                    { isTelegramShareEnabled && (
+                        <ShareButton className='c-page-tg' href={getTelegramLink(character)}/>
                     )}
                 </div>
                 <div className='c-page-right-col'>

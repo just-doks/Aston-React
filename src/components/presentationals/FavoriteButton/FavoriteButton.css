@@ -12,7 +12,7 @@
     background-color: gold;
     color: white;
     padding: 10px;
-    font-size:x-large;
+    font-size: max(16px, min(2vw, 24px));
     font-weight: 600;
     text-shadow: hsl(51, 100%, 25%) 0 0 6px;
     text-align: center;

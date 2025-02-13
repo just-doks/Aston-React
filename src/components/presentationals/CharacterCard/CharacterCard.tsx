@@ -3,6 +3,7 @@ import { Link } from "react-router";
 import './CharacterCard.css';
 import { StarButton } from "#presentationals/StarButton";
 import { PlanetSpinner } from "#presentationals/PlanetSpinner";
+import { TelegramButton } from "#presentationals/TelegramButton";
 
 type CharacterCardProps<T> = {
     character: T,
@@ -12,12 +13,15 @@ type CharacterCardProps<T> = {
     isLoading?: boolean,
     favoriteDisabled?: boolean,
     isFavorite?: boolean,
-    onFavoriteChange?: () => void
+    onFavoriteChange?: () => void,
+    telegramEnabled?: boolean,
+    telegramHref?: string
 };
 
 export function CharacterCard<T>({
     character, name, imgUrl, navigateTo,
-    favoriteDisabled, isLoading, isFavorite, onFavoriteChange
+    favoriteDisabled, isLoading, isFavorite, onFavoriteChange,
+    telegramEnabled, telegramHref
 }: CharacterCardProps<T>) {
     return(
         <div className="c-card-container">
@@ -39,6 +43,9 @@ export function CharacterCard<T>({
                     checked={isFavorite} 
                     onChange={onFavoriteChange}
                 /> 
+                )}
+                { telegramEnabled && (
+                    <TelegramButton href={telegramHref} className="c-card-tg"/>
                 )}
             </>
         )}

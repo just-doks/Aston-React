@@ -34,7 +34,10 @@
 }
 .c-page-fav {
     display: block;
-    margin-top: 5px;
+    margin-top: 8px;
+}
+.c-page-tg {
+    margin-top: 10px;
 }
 
 

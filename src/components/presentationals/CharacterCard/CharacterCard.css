@@ -44,6 +44,21 @@
     transition: opacity 0s ease-in;
 }
 
+.c-card-tg {
+    grid-row: 1 / 2;
+    grid-column: 4 / 5;
+    margin: 5%;
+}
+.c-card-container > .c-card-tg {
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity .15s ease-in;
+}
+.c-card-container:hover > .c-card-tg {
+    visibility: visible;
+    opacity: 0.8;
+}
+
 
 
 .c-card-image {

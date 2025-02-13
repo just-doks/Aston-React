@@ -11,9 +11,11 @@ export function CharacterPage() {
         ((isNaN(id)) ? (
             <Navigate to={PATHS.HOME}/>
         ) : (
-            <Suspense fallback={<div className='c-page-warning-badge'><h1>LOADING...</h1></div>}>
-                <CharacterData />
-            </Suspense>
+            <div className="container">
+                <Suspense fallback={<div className='c-page-warning-badge'><h1>LOADING...</h1></div>}>
+                    <CharacterData />
+                </Suspense>
+            </div>
         )
         )
     )
