@@ -44,3 +44,21 @@ export const saveSearchConfigToLocalStorage = (searchConfig: HistoryItemType[]) 
 export const loadSearchConfigFromLocalStorage = (): HistoryItemType[] => {
     return JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEYS.SEARCH_HISTORY) || "[]");
 }
+
+/**
+ * Функция сохранения массива идентификаторов избранных в localStorage 
+ */
+export function saveFavorites(userLogin: string, favoriteIds: number[]) {
+    localStorage.setItem(userLogin, favoriteIds.toString());
+}
+
+/**
+ * Функция получения массива идентификаторов избранных из localStorage 
+ */
+export function loadFavorites(userLogin: string) {
+    const item = localStorage.getItem(userLogin);
+    if (item) 
+        return item.split(',').map(el => Number(el));
+    else 
+        return [] as number[];
+}

@@ -1,5 +1,5 @@
 import "./CharacterSlider.css";
-import { CharacterCard } from "../CharacterCard";
+import { CharacterCard } from "#containers/CharacterCard";
 import { SvgButton } from "../../assets";
 import { useLayoutEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";

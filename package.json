@@ -2,6 +2,17 @@
   "name": "react-project",
   "version": "0.1.0",
   "private": true,
+  "imports": {
+      "#presentationals/*": ["./src/components/presentationals/*"],
+      "#containers/*": ["./src/components/containers/*"],
+      "#hooks/*": ["./src/hooks/*"],
+      "#http/*": ["./src/http/*"],
+      "#pages/*": ["./src/pages/*"],
+      "#store/*": ["./src/store/*"],
+      "#middlewares/*": ["./src/middlewares/*"],
+      "#utils/*": ["./src/utils/*"],
+      "#assets/*": ["src/assets/*"]
+  },
   "dependencies": {
     "@reduxjs/toolkit": "^2.5.0",
     "axios": "^1.7.9",

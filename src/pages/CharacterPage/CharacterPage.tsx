@@ -1,24 +1,48 @@
-import { useState } from 'react';
 import { useLocation, Navigate } from 'react-router';
+import { useSelector } from "react-redux";
 import './CharacterPage.css';
 import { type CharacterSchema } from 'src/http/characterTypes';
 import { PATHS } from 'src/utils/constants';
-import { FavoriteButton } from './FavoriteButton';
+import { FavoriteButton } from '#presentationals/FavoriteButton';
+import { useFavButton } from 'src/hooks/useFavButton';
+import { useDispatch } from 'react-redux';
+import { useFuncOnUpdate } from 'src/hooks/useFuncOnUpdate';
+import { removeFavoritesFromQueue } from 'src/store/favoriteSlice';
+import { isAuth } from "#utils/selectors";
+import { useImgLoad } from '#hooks/useImgLoad';
+import { PlanetSpinner } from '#presentationals/PlanetSpinner';
 
 export function CharacterPage() {
-    const location = useLocation()
-    const character: CharacterSchema = location.state ?? {};
-    const [checked, setChecked] = useState<boolean>(false);
+    const location = useLocation();
+    const dispatch = useDispatch();
+    const { character }: {character?: CharacterSchema} = location.state ?? {};
+    const isUserAuth = useSelector(isAuth);
+    const [checked, handleFavChange] = useFavButton(character);
+    function removeFavorites() {
+        dispatch(removeFavoritesFromQueue());
+    }
+    const charPageRef = useFuncOnUpdate<HTMLDivElement>(removeFavorites);
+    const [url, isLoading] = useImgLoad(character?.image);
+
     return(
         <> { character
             ?
-            <div className='c-page-grid'>
+            <div className='c-page-grid' ref={charPageRef}>
                 <div className='c-page-left-col'>
-                    <img className='c-page-image' src={character.image}/>
-                    <FavoriteButton 
-                        className='c-page-fav' 
-                        checked={checked}
-                        onChange={() => setChecked(!checked)}/>
+                    <div className='c-page-image-container'>
+                        { isLoading ? (
+                            <PlanetSpinner className='c-page-spinner'/>
+                        ) : (
+                            <img className='c-page-image' src={url}/>
+                        )}
+                    </div>             
+                    { isUserAuth && checked !== null && (
+                        <FavoriteButton 
+                            className='c-page-fav' 
+                            checked={checked}
+                            onChange={handleFavChange}
+                        />
+                    )}
                 </div>
                 <div className='c-page-right-col'>
                     <ul className='c-page-info'>

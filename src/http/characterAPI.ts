@@ -54,7 +54,8 @@ export const fetchCharacter = async (id: number): Promise<CharacterSchema> => {
  */
 export const fetchMultipleCharacters = 
 async (characterIds?: number[]): Promise<CharacterSchema[]> => {
+    if (!characterIds.length) return [] as CharacterSchema[];
     const { data } = 
-        await $host.get(`${CHARACTER_ENDPOINT}/${characterIds.join(',') || ''}`)
-    return data;
+        await $host.get(`${CHARACTER_ENDPOINT}/${characterIds.join(',')}`);
+    return (Array.isArray(data) ? data : [data]);
 }

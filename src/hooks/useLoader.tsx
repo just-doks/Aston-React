@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { PlanetSpinner } from "../assets/PlanetSpinner";
+import { PlanetSpinner } from "#presentationals/PlanetSpinner";
 import { isLoading } from "../utils/selectors";
 import { useSelector } from "react-redux";
 
