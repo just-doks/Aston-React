@@ -1,4 +1,4 @@
-import { configureStore, combineReducers, Tuple } from "@reduxjs/toolkit";
+import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import { authReducer } from "./authSlice";
 import { searchReducer } from "./searchSlice";
 import { loaderReducer } from "./loaderSlice";
@@ -17,7 +17,8 @@ const rootReducer = combineReducers({
 
 export const store = configureStore({
     reducer: rootReducer,
-    middleware: () => new Tuple(favMiddleware, favThunk),
+    middleware: (getDefaultMiddleware) =>
+        getDefaultMiddleware().concat(favMiddleware, favThunk),
     devTools: true
 })
 
