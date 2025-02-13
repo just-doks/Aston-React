@@ -24,7 +24,6 @@ export function useFavButton(character?: CharacterSchema): [checked: boolean | n
     }, [favorite, character])
     
     function handleFavChange() {
-        console.log(location.pathname.includes(PATHS.CHARACTER))
         if (location.pathname === PATHS.FAVORITES || (
                 location.pathname.includes(PATHS.CHARACTER) &&
                 favorite.ids?.includes(character?.id) )
