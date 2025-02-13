@@ -1,27 +1,33 @@
 import { useDispatch, useSelector } from "react-redux";
 import "./HistoryPage.css";
-import { history } from "../../utils/selectors";
-import { clearHistory, configureSearch } from "../../store/searchSlice";
+import { authUserHistory } from "../../utils/selectors";
+import { clearHistory } from "../../store/searchSlice";
+import { AppDispatch } from "../../store/store";
+import { fetchFilteredCharactersThunk } from "../../store/searchThunks";
 import { useNavigate } from "react-router";
 import { PATHS } from "../../utils/constants";
 
+
 export const HistoryPage = () => {
-  const historyList = useSelector(history);
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const historyList = useSelector(authUserHistory);
+  const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate()
 
   const handleClick = () => {
     dispatch(clearHistory());
   };
 
-  const handleSelectHistoryItem = (id: string) => {
-    const existingHistoryItem = historyList.find((historyItem) => historyItem.id === id)
+  const handleSelectHistoryItem = (ids: string) => {
+    const existingHistoryItem = historyList.find(
+      (historyItem) => historyItem.id === ids
+    );
 
-    if(existingHistoryItem) {
-      dispatch(configureSearch(existingHistoryItem))
-      navigate(PATHS.SEARCH)
+    const {id, username, date, ...restData} = existingHistoryItem
+
+    if (existingHistoryItem) {
+      dispatch(fetchFilteredCharactersThunk({data: restData, isWriteToHistory: false})).finally(() => navigate(PATHS.SEARCH))
     }
-  }
+  };
 
   return (
     <div className="container history_wrapper">
@@ -30,8 +36,12 @@ export const HistoryPage = () => {
         <>
           <ul className="history_list">
             {historyList.map((entry, index) => (
-              <li key={index} onClick={() => handleSelectHistoryItem(entry.id)} className="history_item">
-                <span className="history_item-name">{entry.name}</span>
+              <li
+                key={index}
+                onClick={() => handleSelectHistoryItem(entry.id)}
+                className="history_item"
+              >
+                <span className="history_item-name">{entry.error ? `${entry.error}` : entry.name}</span>
                 <span className="history_item-date">{entry.date}</span>
               </li>
             ))}

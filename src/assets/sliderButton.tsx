@@ -1,7 +1,14 @@
 import * as React from "react";
 
-export const SvgButton: React.FC<React.SVGProps<SVGElement>> = () => (
-<svg fill="#000000" height="800px" width="800px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"  
+interface SvgButtonProps extends React.SVGProps<SVGSVGElement> {
+	inactive?: boolean;
+  }
+
+
+export const SvgButton: React.FC<SvgButtonProps> = ({inactive}) => {
+	const fillColor = inactive ? "rgba(43, 74, 128, 0.158)" : "#000"
+	return (
+<svg fill={fillColor} height="800px" width="800px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"  
 	 viewBox="0 0 219.151 219.151">
 <g>
 	<path d="M109.576,219.151c60.419,0,109.573-49.156,109.573-109.576C219.149,49.156,169.995,0,109.576,0S0.002,49.156,0.002,109.575
@@ -13,4 +20,4 @@ export const SvgButton: React.FC<React.SVGProps<SVGElement>> = () => (
 		c-1.407,1.406-2.197,3.313-2.197,5.303c0.001,1.99,0.791,3.896,2.198,5.305L94.861,156.507z"/>
 </g>
 </svg>
-);
+);}
