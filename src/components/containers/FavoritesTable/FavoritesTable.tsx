@@ -15,9 +15,6 @@ export function FavoritesTable() {
     const favorite: favoriteState = useSelector(selectFavorite);
     const dispatch = useDispatch();
 
-    const [ids, setIds] = useState<number[]>([]);
-
-    const [pages, setPages] = useState(0);
     const [currentPage, setCurrentPage] = useState(0);
 
     const [characters, setCharacters] = useState<CharacterSchema[]>([] as CharacterSchema[]);
@@ -25,41 +22,34 @@ export function FavoritesTable() {
     const [prev, setPrev] = useState<boolean>(false);
     const [next, setNext] = useState<boolean>(false);
 
-    const [loading, setLoading] = useState(true)
+    const [loading, setLoading] = useState(false)
 
     useEffect(() => {
-        
         if (!favorite.ids?.length) return;
-        const _pages = Math.ceil(favorite.ids.length / 20);
-        if (pages !== _pages) {
-            setPages(_pages);
-            if (currentPage < 1)
-                setCurrentPage(1);
-            else if (currentPage > pages)
-                setCurrentPage(pages);
-        }
+        const allPages = Math.ceil(favorite.ids.length / 20);
+        if (currentPage < 1) 
+            setCurrentPage(1);
+        else if (currentPage > allPages)
+            setCurrentPage(allPages);
     }, [favorite])
 
     useEffect(() => {
-        if (!currentPage) return;
-        const start = (currentPage - 1) * 20;
-        const end = (currentPage -  1) * 20 + 20;
-        setIds(favorite.ids.slice(start, end));
+        if (!favorite.ids?.length || !currentPage) return;
         setLoading(true);
-    }, [currentPage, pages])
+        const allPages = Math.ceil(favorite.ids.length / 20);
+        const page = (currentPage > allPages ? allPages : currentPage);
+        const start = (page - 1) * 20;
+        const end = (page -  1) * 20 + 20;
 
-    useEffect(() => {
-        if (!ids?.length) return;
-
-        fetchMultipleCharacters(ids)
+        fetchMultipleCharacters(favorite.ids.slice(start, end))
         .then(data => {
             setCharacters(data);
-
-            setPrev(currentPage > 1);
-            setNext(currentPage < pages);
-            setLoading(false);
+            setPrev(page > 1);
+            setNext(page < allPages);
         })
-    }, [ids])
+        .catch(reason => alert(reason))
+        .finally(() => {setLoading(false);})
+    }, [currentPage])
 
     function handlePrevClick() {
         dispatch(removeFavoritesFromQueue());
