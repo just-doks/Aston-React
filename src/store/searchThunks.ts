@@ -43,34 +43,11 @@ export const fetchIfEmptyThunk = createAsyncThunk<
   { state: RootState }
 >("search/fetchIfEmpty", async (_, { getState, dispatch }) => {
   const state = getState();
-  const { searchResults, searchError, history } = state.search;
+  const { searchResults, searchError } = state.search;
   const characters = searchResults?.results || [];
 
-  const loginUser = state.auth?.loginUser;
-
   if (!characters.length && !searchError) {
-    if (!loginUser || !history.length) {
-      dispatch(fetchAllCharactersThunk())
-    } else {
-      const historyItem = history[0];
-      if (historyItem.username === loginUser.username) {
-        try {
-          dispatch(setIsLoading(true));
-          const data = await fetchFilteredCharacters(historyItem);
-          dispatch(setSearchResults(data));
-        } catch (err) {
-          if (err.code === "ERR_BAD_REQUEST") {
-            dispatch(fetchAllCharactersThunk());
-          } else {
-            dispatch(setSearchError(err.code));
-          }
-        } finally {
-          dispatch(setIsLoading(false));
-        }
-      } else {
-        dispatch(fetchAllCharactersThunk())
-      }
-    }
+      dispatch(fetchAllCharactersThunk());
   }
 });
 
