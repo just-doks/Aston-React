@@ -21,32 +21,55 @@ type FilteredCharactersArgs = {
   isWriteToHistory: boolean;
 };
 
+const fetchAllCharactersThunk = createAsyncThunk<
+  void,
+  void,
+  { state: RootState }
+>("search/fetchAllCharacters", async (_, { dispatch }) => {
+  try {
+    dispatch(setIsLoading(true))
+    const data = await fetchAllCharacters();
+    dispatch(setSearchResults(data));
+  } catch (err) {
+    dispatch(setSearchError(err.code));
+  } finally {
+    dispatch(setIsLoading(false))
+  }
+});
+
 export const fetchIfEmptyThunk = createAsyncThunk<
   void,
   void,
   { state: RootState }
 >("search/fetchIfEmpty", async (_, { getState, dispatch }) => {
-  const { searchResults, searchError, history } = getState().search;
+  const state = getState();
+  const { searchResults, searchError, history } = state.search;
   const characters = searchResults?.results || [];
 
-  if (!characters.length && !searchError && history.length) {
-    try {
-      dispatch(setIsLoading(true))
-      const data = await fetchFilteredCharacters(history[0]);
-      dispatch(setSearchResults(data));
-    } catch (err) {
-      if ((err.code = "ERR_BAD_REQUEST")) {
+  const loginUser = state.auth?.loginUser;
+
+  if (!characters.length && !searchError) {
+    if (!loginUser || !history.length) {
+      dispatch(fetchAllCharactersThunk())
+    } else {
+      const historyItem = history[0];
+      if (historyItem.username === loginUser.username) {
         try {
-          const data = await fetchAllCharacters();
+          dispatch(setIsLoading(true));
+          const data = await fetchFilteredCharacters(historyItem);
           dispatch(setSearchResults(data));
         } catch (err) {
-          dispatch(setSearchError(err.code));
+          if (err.code === "ERR_BAD_REQUEST") {
+            dispatch(fetchAllCharactersThunk());
+          } else {
+            dispatch(setSearchError(err.code));
+          }
+        } finally {
+          dispatch(setIsLoading(false));
         }
       } else {
-        dispatch(setSearchError(err.code));
+        dispatch(fetchAllCharactersThunk())
       }
-    } finally {
-      dispatch(setIsLoading(false))
     }
   }
 });
@@ -64,13 +87,13 @@ export const fetchCharacterPageThunk = createAsyncThunk<
 
   if (url) {
     try {
-      dispatch(setIsLoading(true))
+      dispatch(setIsLoading(true));
       const data = await fetchCharacterPage(url);
       dispatch(setSearchResults(data));
     } catch (err) {
       dispatch(setSearchError(err.code));
     } finally {
-      dispatch(setIsLoading(false))
+      dispatch(setIsLoading(false));
     }
   }
 });
@@ -82,10 +105,10 @@ export const fetchFilteredCharactersThunk = createAsyncThunk<
 >(
   "search/fetchFilteredCharacters",
   async ({ data, isWriteToHistory }, { getState, dispatch }) => {
-    const { isAuth } = getState().auth
-    const writeCondition = isWriteToHistory && isAuth
+    const { isAuth } = getState().auth;
+    const writeCondition = isWriteToHistory && isAuth;
     try {
-      dispatch(setIsLoading(true))
+      dispatch(setIsLoading(true));
       dispatch(setSearchError(""));
       dispatch(configureSearch(data));
       const searchResults = await fetchFilteredCharacters(data);
@@ -105,7 +128,7 @@ export const fetchFilteredCharactersThunk = createAsyncThunk<
         );
       }
     } finally {
-      dispatch(setIsLoading(false))
+      dispatch(setIsLoading(false));
     }
   }
 );
@@ -113,26 +136,29 @@ export const fetchFilteredCharactersThunk = createAsyncThunk<
 export const configureHistoryThunk = createAsyncThunk<
   HistoryItemType,
   TypeFilters,
-  { state: RootState,  }
->("search/configureHistory", async (searchConfig, { getState, rejectWithValue }) => {
-  const state = getState()
+  { state: RootState }
+>(
+  "search/configureHistory",
+  async (searchConfig, { getState, rejectWithValue }) => {
+    const state = getState();
 
-  if(!state.auth.isAuth) {
-    return rejectWithValue("User is not authorized")
+    if (!state.auth.isAuth) {
+      return rejectWithValue("User is not authorized");
+    }
+
+    const username = state.auth.loginUser.username;
+
+    const historyItem: HistoryItemType = {
+      id: getRandomId(5),
+      ...searchConfig,
+      date: getCurrentDate(),
+      username,
+    };
+
+    const updateHistory = [historyItem, ...state.search.history];
+
+    saveSearchConfigToLocalStorage(updateHistory);
+
+    return historyItem;
   }
-
-  const username = state.auth.loginUser.username
-
-  const historyItem: HistoryItemType = {
-    id: getRandomId(5),
-    ...searchConfig,
-    date: getCurrentDate(),
-    username
-  }
-
-  const updateHistory = [historyItem, ...state.search.history]
-
-  saveSearchConfigToLocalStorage(updateHistory)
-
-  return historyItem
-});
+);
