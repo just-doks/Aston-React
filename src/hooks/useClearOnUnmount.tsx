@@ -14,5 +14,5 @@ export const useClearOnUnmount = () => {
     return () => {
       dispatch(clearSearchConfig());
     };
-  });
+  }, []);
 };
