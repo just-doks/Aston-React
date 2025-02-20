@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { memo, useContext } from "react";
 import { useSelector } from "react-redux";
 import type { CharacterSchema } from "#http/characterTypes";
 import { PATHS } from "#utils/constants";
@@ -13,6 +13,9 @@ type CharacterCardProps = {
     character: CharacterSchema
 };
 
+const MemoView = memo(View<CharacterSchema>)
+const MemoCardFav = memo(CardFav)
+
 export function CharacterCard({character}: CharacterCardProps) {
     const [url, isLoading] = useImgLoad(character.image);
     const authState = useSelector(isAuth);
@@ -20,7 +23,7 @@ export function CharacterCard({character}: CharacterCardProps) {
     const path = PATHS.CHARACTER + `/${(character.id || '')}`;
     return(
         <>{ authState ? (
-            <CardFav
+            <MemoCardFav
                 character={character}
                 name={character.name}
                 imgUrl={url}
@@ -30,7 +33,7 @@ export function CharacterCard({character}: CharacterCardProps) {
                 telegramHref={getTelegramLink(character)}
             />
         ) : (
-            <View<CharacterSchema>
+            <MemoView
                 character={character}
                 name={character.name}
                 imgUrl={url}

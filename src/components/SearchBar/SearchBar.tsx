@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./SearchBar.css";
 import { FilterMenu } from "./FilterMenu";
 import { Formik, Form, Field } from "formik";
@@ -17,7 +17,10 @@ export const SearchBar: React.FC<{ filterPosition: string }> = (props) => {
   const navigate = useNavigate()
 
   const handleSubmit = (values: TypeFilters) => {
-    dispatch(fetchFilteredCharactersThunk({data: values, isWriteToHistory: true})).finally(() => navigate(PATHS.SEARCH))
+    // navigate(PATHS.SEARCH)
+    dispatch(fetchFilteredCharactersThunk({data: values, isWriteToHistory: true}))
+    .then(() => {navigate(PATHS.SEARCH)})
+    
   };
 
   const dropdownToggle = () => {

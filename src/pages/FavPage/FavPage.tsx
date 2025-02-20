@@ -1,23 +1,25 @@
-import { Suspense, lazy } from "react";
+import { Suspense, lazy, memo, useCallback } from "react";
 import { useDispatch } from "react-redux";
 import { removeFavoritesFromQueue } from '#store/favoriteSlice'; 
 import { useFuncOnUpdate } from '#hooks/useFuncOnUpdate';
 import './FavPage.css';
-
-const FavoritesTable = lazy(() => import('#containers/FavoritesTable').then(module => ({default: module.FavoritesTable})));
+const LazyMemoFavoritesTable = lazy(() => import('#containers/FavoritesTable').then(module => ({default: memo(module.FavoritesTable)})));
 
 export function FavPage() {
     const dispatch = useDispatch();
-    const favPageRef = useFuncOnUpdate<HTMLDivElement>(removeFavorites);
     function removeFavorites() {
         dispatch(removeFavoritesFromQueue());
     }
+    // const removeFavorites = useCallback(() => {
+    //     dispatch(removeFavoritesFromQueue());
+    // }, [])
+    const favPageRef = useFuncOnUpdate<HTMLDivElement>(removeFavorites);
     
     return (
         <div className="container fav-page-wrapper" ref={favPageRef}>
             <h1 className='fav-page-title'>The collection of favorite characters</h1>
             <Suspense fallback={<h1 className="fav-page-title">LOADING...</h1>}>
-                <FavoritesTable />
+                <LazyMemoFavoritesTable />
             </Suspense>
         </div>
     )

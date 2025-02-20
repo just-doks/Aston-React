@@ -1,4 +1,4 @@
-import { CharacterResponse, HistoryItemType } from "@/http/characterTypes";
+import { CharacterResponse, HistoryItemType } from "#http/characterTypes";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { TypeFilters } from "../http/characterTypes";
 import { loadSearchConfigFromLocalStorage, removeItemFromLocalStorage } from "../utils/localStorageFunc";

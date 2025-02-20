@@ -1,5 +1,5 @@
 
-import { createSlice } from "@reduxjs/toolkit";
+import { createSelector, createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "./store";
 import { logout } from "./authSlice";
@@ -68,3 +68,5 @@ export const {
 } = favoriteSlice.actions;
 
 export const selectFavorite = (state: RootState) => state.favorite;
+
+export const selectIds = createSelector([selectFavorite], (fav) => fav.ids);

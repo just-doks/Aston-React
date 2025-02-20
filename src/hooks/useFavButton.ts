@@ -6,7 +6,7 @@ import { addFavorite, removeFavorite } from "src/store/favoriteSlice";
 import { PATHS } from "src/utils/constants";
 import type { CharacterSchema } from "src/http/characterTypes";
 
-export function useFavButton(character?: CharacterSchema): [checked: boolean | null, handleStarChange: () => void] {
+export function useFavButton(character?: CharacterSchema): [checked: boolean | null, handleFavChange: () => void] {
     const favorite = useSelector(selectFavorite);
     const dispatch = useDispatch();
     const location = useLocation();

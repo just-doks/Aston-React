@@ -4,6 +4,7 @@ import './CharacterCard.css';
 import { StarButton } from "#presentationals/StarButton";
 import { PlanetSpinner } from "#presentationals/PlanetSpinner";
 import { TelegramButton } from "#presentationals/TelegramButton";
+import { getTime } from "#utils/getTime";
 
 type CharacterCardProps<T> = {
     character: T,
@@ -23,6 +24,7 @@ export function CharacterCard<T>({
     favoriteDisabled, isLoading, isFavorite, onFavoriteChange,
     telegramEnabled, telegramHref
 }: CharacterCardProps<T>) {
+    console.log(`charCard ${name} render: ` + getTime() + `${imgUrl ? '' : ' no img'}`);
     return(
         <div className="c-card-container">
         { isLoading ? (

@@ -6,6 +6,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { searchError, searchResults } from "../../utils/selectors";
 import { AppDispatch } from "../../store/store";
 import { fetchCharacterPageThunk, fetchIfEmptyThunk } from "../../store/searchThunks";
+import { setSearchError } from "#store/searchSlice";
 
 export const CharacterSlider = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -17,7 +18,8 @@ export const CharacterSlider = () => {
 
   useLayoutEffect(() => {
     if (error) {
-      throw new Error(error);
+        dispatch(setSearchError(""));
+        throw new Error(error);
     }
     dispatch(fetchIfEmptyThunk())
   }, [error]);

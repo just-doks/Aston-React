@@ -6,7 +6,6 @@ import { useClearOnUnmount } from "../../hooks/useClearOnUnmount";
 import { PlanetSpinner } from "#presentationals/PlanetSpinner";
 const LazySlider = lazy(() => import("../../components/CharacterList").then(res => ({ default: res.CharacterSlider })));
 
-
 const SuspenseSpinner: FC = () => {
   return <div className="suspense-spinner"><PlanetSpinner className="suspense-spinner" /></div>
 }
@@ -20,7 +19,7 @@ export const SearchPage: FC = () => {
       <SearchErrorBoundary>
         <SearchBar filterPosition="bottom" />
         <Suspense fallback={<SuspenseSpinner />}>
-          <LazySlider />
+           <LazySlider />
         </Suspense>
       </SearchErrorBoundary>
     </div>

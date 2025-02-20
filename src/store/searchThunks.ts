@@ -109,7 +109,7 @@ export const fetchFilteredCharactersThunk = createAsyncThunk<
     const writeCondition = isWriteToHistory && isAuth;
     try {
       dispatch(setIsLoading(true));
-      dispatch(setSearchError(""));
+      //dispatch(setSearchError(""));
       dispatch(configureSearch(data));
       const searchResults = await fetchFilteredCharacters(data);
       dispatch(setSearchResults(searchResults));
