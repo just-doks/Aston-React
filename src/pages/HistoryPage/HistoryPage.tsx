@@ -6,12 +6,12 @@ import { AppDispatch } from "../../store/store";
 import { fetchFilteredCharactersThunk } from "../../store/searchThunks";
 import { useNavigate } from "react-router";
 import { PATHS } from "../../utils/constants";
-
+import { formatEntry } from "#utils/formatEntry";
 
 export const HistoryPage = () => {
   const historyList = useSelector(authUserHistory);
   const dispatch = useDispatch<AppDispatch>();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const handleClick = () => {
     dispatch(clearHistory());
@@ -22,10 +22,15 @@ export const HistoryPage = () => {
       (historyItem) => historyItem.id === ids
     );
 
-    const {id, username, date, ...restData} = existingHistoryItem
+    const { id, username, date, ...restData } = existingHistoryItem;
 
     if (existingHistoryItem) {
-      dispatch(fetchFilteredCharactersThunk({data: restData, isWriteToHistory: false})).finally(() => navigate(PATHS.SEARCH))
+      dispatch(
+        fetchFilteredCharactersThunk({
+          data: restData,
+          isWriteToHistory: false,
+        })
+      ).finally(() => navigate(PATHS.SEARCH));
     }
   };
 
@@ -41,7 +46,9 @@ export const HistoryPage = () => {
                 onClick={() => handleSelectHistoryItem(entry.id)}
                 className="history_item"
               >
-                <span className="history_item-name">{entry.error ? `${entry.error}` : entry.name}</span>
+                <span className="history_item-name">
+                  {formatEntry(entry)}
+                </span>
                 <span className="history_item-date">{entry.date}</span>
               </li>
             ))}
