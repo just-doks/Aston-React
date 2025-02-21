@@ -7,12 +7,9 @@ const LazyMemoFavoritesTable = lazy(() => import('#containers/FavoritesTable').t
 
 export function FavPage() {
     const dispatch = useDispatch();
-    function removeFavorites() {
+    const removeFavorites = useCallback(() => {
         dispatch(removeFavoritesFromQueue());
-    }
-    // const removeFavorites = useCallback(() => {
-    //     dispatch(removeFavoritesFromQueue());
-    // }, [])
+    }, [])
     const favPageRef = useFuncOnUpdate<HTMLDivElement>(removeFavorites);
     
     return (

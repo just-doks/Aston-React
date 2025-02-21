@@ -3,7 +3,7 @@ import { createSelector, createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "./store";
 import { logout } from "./authSlice";
-import { loadFavorites, saveFavorites } from "src/utils/localStorageFunc";
+import { loadFavorites, loadLoginUser, saveFavorites } from "src/utils/localStorageFunc";
 
 export type favoriteState = {
     userLogin: string | null,
@@ -11,11 +11,26 @@ export type favoriteState = {
     idsForRemoval: number[] | null
 }
 
-const initialState: favoriteState = {
-    userLogin: null,
-    ids: null,
-    idsForRemoval: null
+function clearFavoriteState(state: favoriteState) {
+    state.userLogin = null;
+    state.ids = null;
+    state.idsForRemoval = null;
 }
+
+const user = loadLoginUser();
+const initialState: favoriteState = (user ? (
+    {
+        userLogin: user.username,
+        ids: loadFavorites(user.username),
+        idsForRemoval: [] as number[]
+    }
+) : (
+    {
+        userLogin: null,
+        ids: null,
+        idsForRemoval: null
+    }
+));
 
 const favoriteSlice = createSlice({
     name: "favorite",
@@ -50,9 +65,7 @@ const favoriteSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(logout, (state) => {
-                state.ids = null;
-                state.userLogin = null;
-                state.idsForRemoval = null;
+                clearFavoriteState(state);
             })
     }
 });

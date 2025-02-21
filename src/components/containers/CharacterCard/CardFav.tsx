@@ -4,15 +4,7 @@ import { CharacterCard as View } from "#presentationals/CharacterCard";
 import type { CharacterSchema } from "#http/characterTypes";
 import { memo, useCallback } from "react";
 
-const MemoView = memo(View<CharacterSchema>, (prevProps, nextProps) => {
-    for (const prop in prevProps) {
-        if (nextProps[prop] !== prevProps[prop]) {
-            console.log(prop + ": prev - " + prevProps[prop] + ", next - " + nextProps[prop])
-            return false;
-        }
-    }
-    return true;
-})
+const MemoView = memo(View<CharacterSchema>);
 
 type CardFavProps = {
     character: CharacterSchema,

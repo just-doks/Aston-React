@@ -1,12 +1,10 @@
 import { Component, ReactNode } from "react";
 import { connect } from "react-redux";
-// import { setSearchError } from "../../store/searchSlice";
 import "./SearchErrorBoundary.css";
 
 
 interface ErrorBoundaryProps {
   children: ReactNode;
-//   setSearchError: (error: string) => void;
 }
 interface SearchErrorBoundaryState {
   hasError: boolean;
@@ -19,27 +17,21 @@ class ErrorBoundary extends Component<
 > {
   constructor(props: ErrorBoundaryProps) {
     super(props);
-    console.log("constructor");
     this.state = { hasError: false, error: null };
   }
 
   handleError = () => {
-    // this.props.setSearchError("");
     this.setState({ hasError: false });
   };
 
   componentDidCatch(error: Error): void {
-    // console.log("catch")
     this.setState({ hasError: true, error });
   }
   componentWillUnmount(): void {
-    // console.log("unmount");
-    //   this.props.setSearchError("");
       this.setState({ hasError: false });
   }
 
   render(): ReactNode {
-    // console.log("render, hasError: " + this.state.hasError)
     if (this.state.hasError) {
       return (
         <div className="searchBoundary">
@@ -61,9 +53,5 @@ class ErrorBoundary extends Component<
     return this.props.children;
   }
 }
-// const props = {
-//   setSearchError,
-// };
 
-// export const SearchErrorBoundary = connect(null, props)(ErrorBoundary);
 export const SearchErrorBoundary = connect()(ErrorBoundary);

@@ -2,7 +2,6 @@ import { JSX } from 'react';
 import { ArrowButton } from "#presentationals/ArrowButton";
 import './CharacterTable.css';
 import { ReactNode } from "react";
-import { getTime } from '#utils/getTime';
 
 type CharacterTableProps = {
     prev: boolean,
@@ -16,7 +15,6 @@ type CharacterTableProps = {
 export function CharacterTable({
     prev, onPrevClick, next, onNextClick, children, className
 }: CharacterTableProps) {
-    console.log('charTable render: '  + getTime())
     return(
         <div className={"char-table-grid" + (className ? ` ${className}` : '')}>
             { prev && (
